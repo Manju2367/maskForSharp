@@ -4,7 +4,8 @@
   "description": "Sharpモジュールを使用して画像のマスク処理を実装します。",
   "main": "main.js",
   "scripts": {
-    "test": "node test/test.js"
+    "test": "node test/test.js",
+    "start": "node main.js"
   },
   "repository": {
     "type": "git",
@@ -21,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/Manju2367/maskForSharp/issues"
   },
-  "homepage": "https://github.com/Manju2367/maskForSharp#readme"
+  "homepage": "https://github.com/Manju2367/maskForSharp#readme",
+  "dependencies": {
+    "sharp": "^0.32.1"
+  }
 }
