@@ -1,0 +1,25 @@
+{
+  "name": "mask-for-sharp",
+  "version": "1.0.0",
+  "description": "Sharpモジュールを使用して画像のマスク処理を実装します。",
+  "main": "main.js",
+  "scripts": {
+    "test": "node test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Manju2367/maskForSharp.git"
+  },
+  "keywords": [
+    "sharp",
+    "image",
+    "mask",
+    "masking"
+  ],
+  "author": "koshianmanju",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Manju2367/maskForSharp/issues"
+  },
+  "homepage": "https://github.com/Manju2367/maskForSharp#readme"
+}
