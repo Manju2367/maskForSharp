@@ -7,15 +7,21 @@ exports.mask = void 0;
 const sharp_1 = __importDefault(require("sharp"));
 /**
  *
- * @param image
- * @param mask
+ * @param image 処理対称のsharpオブジェクト
+ * @param mask マスク画像のsharpオブジェクト
  * @param options
+ * @param options.x
+ * @param options.y
  * @returns
  */
-const mask = (image, mask, options = {
+const mask = async (image, mask, options = {
     x: 0,
     y: 0
 }) => {
+    options.x ??= 0;
+    options.y ??= 0;
+    if ((await image.metadata()).channels === 3)
+        image.ensureAlpha(1);
     return new Promise((resolve, reject) => {
         image.raw().toBuffer(async (err, data, info) => {
             if (!err) {
@@ -37,8 +43,8 @@ const mask = (image, mask, options = {
                         left: options.x,
                         top: options.y
                     }]).grayscale().raw().toBuffer();
-                data.forEach((d, i) => {
-                    if (i % 4 === 3) {
+                data.forEach((v, i) => {
+                    if ((i + 1) % 4 === 0) {
                         data[i] *= paste[(i + 1) / 4] / 0xFF;
                     }
                 });
@@ -48,7 +54,7 @@ const mask = (image, mask, options = {
                         height: info.height,
                         channels: 4
                     }
-                }).png());
+                }));
             }
             else {
                 reject(err);

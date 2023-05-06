@@ -1,5 +1,12 @@
 import sharp from "sharp"
 
+
+
+interface Options {
+    x: number
+    y: number
+}
+
 /**
  * 
  * @param image 処理対称のsharpオブジェクト
@@ -9,10 +16,15 @@ import sharp from "sharp"
  * @param options.y 
  * @returns 
  */
-export const mask = (image: sharp.Sharp, mask: sharp.Sharp, options={
+export const mask = async (image: sharp.Sharp, mask: sharp.Sharp, options: Partial<Options> = {
     x: 0,
-    y: 0
-}) => {
+    y: 0 
+}): Promise<sharp.Sharp> => {
+    options.x ??= 0
+    options.y ??= 0
+
+    if((await image.metadata()).channels === 3) image.ensureAlpha(1)
+
     return new Promise((resolve, reject) => {
         image.raw().toBuffer(async (err, data, info) => {
             if(!err) {
@@ -34,9 +46,9 @@ export const mask = (image: sharp.Sharp, mask: sharp.Sharp, options={
                     left: options.x,
                     top: options.y
                 }]).grayscale().raw().toBuffer()
-            
-                data.forEach((d: number, i: number) => {
-                    if(i % 4 === 3) {
+                
+                data.forEach((v: number, i: number) => {
+                    if((i + 1) % 4 === 0) {
                         data[i] *= paste[(i + 1)/4] / 0xFF
                     }
                 })
@@ -47,7 +59,7 @@ export const mask = (image: sharp.Sharp, mask: sharp.Sharp, options={
                         height: info.height,
                         channels: 4
                     }
-                }).png())
+                }))
             } else {
                 reject(err)
             }
