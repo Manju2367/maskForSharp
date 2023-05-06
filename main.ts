@@ -3,17 +3,28 @@ import sharp from "sharp"
 
 
 interface Options {
-    x: number
-    y: number
+    x?: number
+    y?: number
+}
+
+interface ColorOption {
+    fill?: string
+    stroke?: string
+}
+
+interface CreateCircle {
+    (radius: number, cx: number, cy: number, width: number, height: number, options?: ColorOption): sharp.Sharp
+    (radius: number, cx: number, cy: number, options?: ColorOption): sharp.Sharp
+    (radius: number, options?: ColorOption): sharp.Sharp
 }
 
 /**
- * 
+ * imageに対してmaskを用いてマスク処理をします。
  * @param image 処理対称のsharpオブジェクト
  * @param mask マスク画像のsharpオブジェクト
  * @param options 
- * @param options.x 
- * @param options.y 
+ * @param options.x maskを適応するx座標
+ * @param options.y maskを適応するy座標
  * @returns 
  */
 export const mask = async (image: sharp.Sharp, mask: sharp.Sharp, options: Partial<Options> = {
@@ -65,4 +76,53 @@ export const mask = async (image: sharp.Sharp, mask: sharp.Sharp, options: Parti
             }
         })
     })
+}
+
+export const createCircle: CreateCircle = (...args: any): sharp.Sharp => {
+    if(typeof args[2] === "undefined" && typeof args[3] === "undefined" && typeof args[4] === "undefined" && typeof args[5] === "undefined") {
+        if(typeof args[1] === "undefined") {
+            args[1] = {
+                fill: "black",
+                stroke: "none"
+            }
+        } else {
+            args[1].fill ??= "black"
+            args[1].stroke ??= "none"
+        }
+        return sharp(Buffer.from(`
+            <svg viewBox="0 0 ${ args[0]*2 } ${ args[0]*2 }" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="${ args[0] }" cy="${ args[0] }" r="${ args[0] }" fill="${ args[1].fill }" stroke="${ args[1].stroke }" />
+            </svg>
+        `))
+    } else if(typeof args[1] === "number" && typeof args[2] === "number") {
+        if(typeof args[3] === "undefined") {
+            args[3] = {
+                fill: "black",
+                stroke: "none"
+            }
+        } else {
+            args[3].fill ??= "black"
+            args[3].stroke ??= "none"
+        }
+        return sharp(Buffer.from(`
+            <svg viewBox="0 0 ${ args[1] + args[0]*2 } ${ args[2] + args[0]*2 }" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="${ args[1] }" cy="${ args[2] }" r="${ args[0] }" />
+            </svg>
+        `))
+    } else {
+        if(typeof args[5] === "undefined") {
+            args[5] = {
+                fill: "black",
+                stroke: "none"
+            }
+        } else {
+            args[5].fill ??= "black"
+            args[5].stroke ??= "none"
+        }
+        return sharp(Buffer.from(`
+            <svg viewBox="0 0 ${ args[3] } ${ args[4] }" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="${ args[1] }" cy="${ args[2] }" r="${ args[0] }" />
+            </svg>
+        `))
+    }
 }

@@ -1,7 +1,7 @@
 {
-  "name": "mask-for-sharp",
+  "name": "sharp-utils",
   "version": "1.0.0",
-  "description": "Sharpモジュールを使用して画像のマスク処理を実装します。",
+  "description": "Sharpモジュールのutil的な",
   "main": "main.js",
   "scripts": {
     "test": "node test/test.js",
