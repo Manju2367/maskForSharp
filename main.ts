@@ -7,17 +7,61 @@ interface Options {
     y?: number
 }
 
-
-
 interface FillOption {
     color: string
     opacity: number
 }
 
+interface DashOption {
+    array: Array<number>
+    offset: number
+}
+
+interface StrokeOption {
+    color: string,
+    width: number,
+    opacity: number,
+    position: "inner"|"middle"|"outer",
+    dash: Partial<DashOption>
+}
+
+interface ShapeOption {
+    fill: Partial<FillOption>
+    stroke: Partial<StrokeOption>
+}
+
+interface CreateCircle {
+    (radius: number, cx: number, cy: number, width: number, height: number, options?: Partial<ShapeOption>): sharp.Sharp
+    (radius: number, cx: number, cy: number, options?: Partial<ShapeOption>): sharp.Sharp
+    (radius: number, options?: Partial<ShapeOption>): sharp.Sharp
+}
+
+
+
 const FillOptionDefault: FillOption = {
     color: "black",
     opacity: 1
 }
+
+const DashOptionDefault: DashOption = {
+    array: [],
+    offset: 0
+}
+
+const StrokeOptionDefault: StrokeOption = {
+    color: "none",
+    width: 1,
+    opacity: 1,
+    position: "outer",
+    dash: DashOptionDefault
+}
+
+const ShapeOptionDefault: ShapeOption = {
+    fill: FillOptionDefault,
+    stroke: StrokeOptionDefault
+}
+
+
 
 const isFillOption = (value: unknown): value is FillOption => {
     if(typeof value !== "object" || value === null) {
@@ -37,18 +81,6 @@ const isFillOption = (value: unknown): value is FillOption => {
     return true
 }
 
-
-
-interface DashOption {
-    array: Array<number>
-    offset: number
-}
-
-const DashOptionDefault: DashOption = {
-    array: [],
-    offset: 0
-}
-
 const isDashOption = (value: unknown): value is DashOption => {
     if(typeof value !== "object" || value === null) {
         return false
@@ -65,24 +97,6 @@ const isDashOption = (value: unknown): value is DashOption => {
     }
 
     return true
-}
-
-
-
-interface StrokeOption {
-    color: string,
-    width: number,
-    opacity: number,
-    position: "inner"|"middle"|"outer",
-    dash: Partial<DashOption>
-}
-
-const StrokeOptionDefault: StrokeOption = {
-    color: "none",
-    width: 1,
-    opacity: 1,
-    position: "outer",
-    dash: DashOptionDefault
 }
 
 const isStrokeOption = (value: unknown): value is StrokeOption => {
@@ -115,18 +129,6 @@ const isStrokeOption = (value: unknown): value is StrokeOption => {
     return true
 }
 
-
-
-interface ShapeOption {
-    fill: Partial<FillOption>
-    stroke: Partial<StrokeOption>
-}
-
-const ShapeOptionDefault: ShapeOption = {
-    fill: FillOptionDefault,
-    stroke: StrokeOptionDefault
-}
-
 const isShapeOption = (value: unknown): value is ShapeOption => {
     if(typeof value !== "object" || value === null) {
         return false
@@ -147,11 +149,7 @@ const isShapeOption = (value: unknown): value is ShapeOption => {
 
 
 
-interface CreateCircle {
-    (radius: number, cx: number, cy: number, width: number, height: number, options?: Partial<ShapeOption>): sharp.Sharp
-    (radius: number, cx: number, cy: number, options?: Partial<ShapeOption>): sharp.Sharp
-    (radius: number, options?: Partial<ShapeOption>): sharp.Sharp
-}
+
 
 
 

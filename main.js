@@ -9,6 +9,21 @@ const FillOptionDefault = {
     color: "black",
     opacity: 1
 };
+const DashOptionDefault = {
+    array: [],
+    offset: 0
+};
+const StrokeOptionDefault = {
+    color: "none",
+    width: 1,
+    opacity: 1,
+    position: "outer",
+    dash: DashOptionDefault
+};
+const ShapeOptionDefault = {
+    fill: FillOptionDefault,
+    stroke: StrokeOptionDefault
+};
 const isFillOption = (value) => {
     if (typeof value !== "object" || value === null) {
         return false;
@@ -22,10 +37,6 @@ const isFillOption = (value) => {
     }
     return true;
 };
-const DashOptionDefault = {
-    array: [],
-    offset: 0
-};
 const isDashOption = (value) => {
     if (typeof value !== "object" || value === null) {
         return false;
@@ -38,13 +49,6 @@ const isDashOption = (value) => {
         return false;
     }
     return true;
-};
-const StrokeOptionDefault = {
-    color: "none",
-    width: 1,
-    opacity: 1,
-    position: "outer",
-    dash: DashOptionDefault
 };
 const isStrokeOption = (value) => {
     if (typeof value !== "object" || value === null) {
@@ -67,10 +71,6 @@ const isStrokeOption = (value) => {
         return false;
     }
     return true;
-};
-const ShapeOptionDefault = {
-    fill: FillOptionDefault,
-    stroke: StrokeOptionDefault
 };
 const isShapeOption = (value) => {
     if (typeof value !== "object" || value === null) {
