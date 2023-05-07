@@ -3,88 +3,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createCircle = exports.mask = void 0;
+exports.createRect = exports.createCircle = exports.mask = void 0;
 const sharp_1 = __importDefault(require("sharp"));
-const FillOptionDefault = {
-    color: "black",
-    opacity: 1
-};
-const DashOptionDefault = {
-    array: [],
-    offset: 0
-};
-const StrokeOptionDefault = {
-    color: "none",
-    width: 1,
-    opacity: 1,
-    position: "outer",
-    dash: DashOptionDefault
-};
-const ShapeOptionDefault = {
-    fill: FillOptionDefault,
-    stroke: StrokeOptionDefault
-};
-const isFillOption = (value) => {
-    if (typeof value !== "object" || value === null) {
-        return false;
-    }
-    const { color, opacity } = value;
-    if (typeof color !== "string" && typeof color !== "undefined") {
-        return false;
-    }
-    if (typeof opacity !== "number" && typeof opacity !== "undefined") {
-        return false;
-    }
-    return true;
-};
-const isDashOption = (value) => {
-    if (typeof value !== "object" || value === null) {
-        return false;
-    }
-    const { array, offset } = value;
-    if (!(array instanceof (Array)) && typeof array !== "undefined") {
-        return false;
-    }
-    if (typeof offset !== "number" && typeof offset !== "undefined") {
-        return false;
-    }
-    return true;
-};
-const isStrokeOption = (value) => {
-    if (typeof value !== "object" || value === null) {
-        return false;
-    }
-    const { color, width, opacity, position, dash } = value;
-    if (typeof color !== "string" && typeof color !== "undefined") {
-        return false;
-    }
-    if (typeof width !== "number" && typeof width !== "undefined") {
-        return false;
-    }
-    if (typeof opacity !== "number" && typeof opacity !== "undefined") {
-        return false;
-    }
-    if (typeof position !== "string" && typeof opacity !== "undefined") {
-        return false;
-    }
-    if (!isDashOption(dash) && typeof dash !== "undefined") {
-        return false;
-    }
-    return true;
-};
-const isShapeOption = (value) => {
-    if (typeof value !== "object" || value === null) {
-        return false;
-    }
-    const { fill, stroke } = value;
-    if (!isFillOption(fill) && typeof fill !== "undefined") {
-        return false;
-    }
-    if (!isStrokeOption(stroke) && typeof stroke !== "undefined") {
-        return false;
-    }
-    return true;
-};
+const constant_1 = require("./constant");
+const function_1 = require("./function");
 /**
  * imageに対してmaskを用いてマスク処理をします。
  * @param image 処理対称のsharpオブジェクト
@@ -98,6 +20,10 @@ const mask = async (image, mask, options = {
     x: 0,
     y: 0
 }) => {
+    options ??= {
+        x: 0,
+        y: 0
+    };
     options.x ??= 0;
     options.y ??= 0;
     if ((await image.metadata()).channels === 3)
@@ -105,6 +31,16 @@ const mask = async (image, mask, options = {
     return new Promise((resolve, reject) => {
         image.raw().toBuffer(async (err, data, info) => {
             if (!err) {
+                let maskWidth = ((await mask.metadata()).width ?? 0) + (options.x ?? 0);
+                let maskHeight = ((await mask.metadata()).height ?? 0) + (options.y ?? 0);
+                if (maskWidth > info.width || maskHeight > info.height) {
+                    mask.extract({
+                        left: 0,
+                        top: 0,
+                        width: maskWidth > info.width ? info.width - (options.x ?? 0) : (maskWidth - (options.x ?? 0)),
+                        height: maskHeight > info.height ? info.height - (options.y ?? 0) : (maskHeight - (options.y ?? 0))
+                    });
+                }
                 let maskBuffer = await mask.toBuffer();
                 let paste = await (0, sharp_1.default)({
                     create: {
@@ -144,7 +80,7 @@ const mask = async (image, mask, options = {
 };
 exports.mask = mask;
 const createCircle = (...args) => {
-    if (typeof args[0] === "number" && typeof args[1] === "number" && typeof args[2] === "number" && typeof args[3] === "number" && typeof args[4] === "number" && (typeof args[5] === "undefined" || isShapeOption(args[5]))) {
+    if (typeof args[0] === "number" && typeof args[1] === "number" && typeof args[2] === "number" && typeof args[3] === "number" && typeof args[4] === "number" && (typeof args[5] === "undefined" || (0, function_1.isShapeOption)(args[5]))) {
         let radius = args[0];
         let cx = args[1];
         let cy = args[2];
@@ -152,89 +88,65 @@ const createCircle = (...args) => {
         let height = args[4];
         let options = args[5];
         // init options
-        options ??= ShapeOptionDefault;
-        options.fill ??= FillOptionDefault;
-        options.fill.color ??= FillOptionDefault.color;
-        options.fill.opacity ??= FillOptionDefault.opacity;
-        options.stroke ??= StrokeOptionDefault;
-        options.stroke.color ??= StrokeOptionDefault.color;
-        options.stroke.width ??= StrokeOptionDefault.width;
-        options.stroke.opacity ??= StrokeOptionDefault.opacity;
-        options.stroke.position ??= "middle";
-        options.stroke.dash ??= DashOptionDefault;
-        options.stroke.dash.array ??= DashOptionDefault.array;
-        options.stroke.dash.offset ??= DashOptionDefault.offset;
-        let drFill = options.stroke.position === "middle" ? options.stroke.width / 2 :
-            (options.stroke.position === "outer" ? options.stroke.width : 0);
+        options ??= constant_1.ShapeOptionDefault;
+        options.fill ??= constant_1.FillOptionDefault;
+        options.fill.color ??= constant_1.FillOptionDefault.color;
+        options.fill.opacity ??= constant_1.FillOptionDefault.opacity;
+        options.stroke ??= constant_1.StrokeOptionDefault;
+        options.stroke.color ??= constant_1.StrokeOptionDefault.color;
+        options.stroke.width ??= constant_1.StrokeOptionDefault.width;
+        options.stroke.opacity ??= constant_1.StrokeOptionDefault.opacity;
+        options.stroke.dash ??= constant_1.DashOptionDefault;
+        options.stroke.dash.array ??= constant_1.DashOptionDefault.array;
+        options.stroke.dash.offset ??= constant_1.DashOptionDefault.offset;
         return (0, sharp_1.default)(Buffer.from(`
-            <svg viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
+            <svg viewBox="0 0 ${width} ${height}">
                 <circle 
                     cx="${cx}"
                     cy="${cy}"
-                    r="${radius - drFill}"
+                    r="${radius - (options.stroke.color !== "none" ? options.stroke.width / 2 : 0)}"
                     fill="${options.fill.color}"
                     fill-opacity="${options.fill.opacity}"
-                    stroke="none"
-                />
-                ${options.stroke.color !== "none" ? `
-                <circle 
-                    cx="${cx}"
-                    cy="${cy}"
-                    r="${radius - options.stroke.width / 2}"
-                    fill="none"
                     stroke="${options.stroke.color}"
                     stroke-width="${options.stroke.width}"
                     stroke-opacity="${options.stroke.opacity}"
                     stroke-dasharray="${options.stroke.dash.array.join(" ")}"
                     stroke-dashoffset="${options.stroke.dash.offset}"
                 />
-                ` : ""}
             </svg>
         `));
     }
-    else if (typeof args[0] === "number" && typeof args[1] === "number" && typeof args[2] === "number" && isShapeOption(args[3])) {
+    else if (typeof args[0] === "number" && typeof args[1] === "number" && typeof args[2] === "number" && (typeof args[3] === "undefined" || (0, function_1.isShapeOption)(args[3]))) {
         let radius = args[0];
         let cx = args[1];
         let cy = args[2];
         let options = args[3];
         // init options
-        options ??= ShapeOptionDefault;
-        options.fill ??= FillOptionDefault;
-        options.fill.color ??= FillOptionDefault.color;
-        options.fill.opacity ??= FillOptionDefault.opacity;
-        options.stroke ??= StrokeOptionDefault;
-        options.stroke.color ??= StrokeOptionDefault.color;
-        options.stroke.width ??= StrokeOptionDefault.width;
-        options.stroke.opacity ??= StrokeOptionDefault.opacity;
-        options.stroke.position ??= "middle";
-        options.stroke.dash ??= DashOptionDefault;
-        options.stroke.dash.array ??= DashOptionDefault.array;
-        options.stroke.dash.offset ??= DashOptionDefault.offset;
-        let drFill = options.stroke.position === "middle" ? options.stroke.width / 2 :
-            (options.stroke.position === "outer" ? options.stroke.width : 0);
+        options ??= constant_1.ShapeOptionDefault;
+        options.fill ??= constant_1.FillOptionDefault;
+        options.fill.color ??= constant_1.FillOptionDefault.color;
+        options.fill.opacity ??= constant_1.FillOptionDefault.opacity;
+        options.stroke ??= constant_1.StrokeOptionDefault;
+        options.stroke.color ??= constant_1.StrokeOptionDefault.color;
+        options.stroke.width ??= constant_1.StrokeOptionDefault.width;
+        options.stroke.opacity ??= constant_1.StrokeOptionDefault.opacity;
+        options.stroke.dash ??= constant_1.DashOptionDefault;
+        options.stroke.dash.array ??= constant_1.DashOptionDefault.array;
+        options.stroke.dash.offset ??= constant_1.DashOptionDefault.offset;
         return (0, sharp_1.default)(Buffer.from(`
-            <svg viewBox="0 0 ${cx + radius} ${cy + radius}" xmlns="http://www.w3.org/2000/svg">
+            <svg viewBox="0 0 ${radius + cx} ${radius + cy}">
                 <circle 
                     cx="${cx}"
                     cy="${cy}"
-                    r="${radius - drFill}"
+                    r="${radius - (options.stroke.color !== "none" ? options.stroke.width / 2 : 0)}"
                     fill="${options.fill.color}"
                     fill-opacity="${options.fill.opacity}"
-                    stroke="none"
-                />
-                ${options.stroke.color !== "none" ? `
-                <circle 
-                    cx="${cx}"
-                    cy="${cy}"
-                    r="${radius - options.stroke.width / 2}"
-                    fill="none"
                     stroke="${options.stroke.color}"
                     stroke-width="${options.stroke.width}"
                     stroke-opacity="${options.stroke.opacity}"
                     stroke-dasharray="${options.stroke.dash.array.join(" ")}"
                     stroke-dashoffset="${options.stroke.dash.offset}"
                 />
-                ` : ""}
             </svg>
         `));
     }
@@ -242,45 +154,186 @@ const createCircle = (...args) => {
         let radius = args[0];
         let options = args[1];
         // init options
-        options ??= ShapeOptionDefault;
-        options.fill ??= FillOptionDefault;
-        options.fill.color ??= FillOptionDefault.color;
-        options.fill.opacity ??= FillOptionDefault.opacity;
-        options.stroke ??= StrokeOptionDefault;
-        options.stroke.color ??= StrokeOptionDefault.color;
-        options.stroke.width ??= StrokeOptionDefault.width;
-        options.stroke.opacity ??= StrokeOptionDefault.opacity;
-        options.stroke.position ??= "middle";
-        options.stroke.dash ??= DashOptionDefault;
-        options.stroke.dash.array ??= DashOptionDefault.array;
-        options.stroke.dash.offset ??= DashOptionDefault.offset;
-        let drFill = options.stroke.position === "middle" ? options.stroke.width / 2 :
-            (options.stroke.position === "outer" ? options.stroke.width : 0);
+        options ??= constant_1.ShapeOptionDefault;
+        options.fill ??= constant_1.FillOptionDefault;
+        options.fill.color ??= constant_1.FillOptionDefault.color;
+        options.fill.opacity ??= constant_1.FillOptionDefault.opacity;
+        options.stroke ??= constant_1.StrokeOptionDefault;
+        options.stroke.color ??= constant_1.StrokeOptionDefault.color;
+        options.stroke.width ??= constant_1.StrokeOptionDefault.width;
+        options.stroke.opacity ??= constant_1.StrokeOptionDefault.opacity;
+        options.stroke.dash ??= constant_1.DashOptionDefault;
+        options.stroke.dash.array ??= constant_1.DashOptionDefault.array;
+        options.stroke.dash.offset ??= constant_1.DashOptionDefault.offset;
         return (0, sharp_1.default)(Buffer.from(`
-            <svg viewBox="0 0 ${radius * 2} ${radius * 2}" xmlns="http://www.w3.org/2000/svg">
+            <svg viewBox="0 0 ${radius * 2} ${radius * 2}">
                 <circle 
                     cx="${radius}"
                     cy="${radius}"
-                    r="${radius - drFill}"
+                    r="${radius - (options.stroke.color !== "none" ? options.stroke.width / 2 : 0)}"
                     fill="${options.fill.color}"
                     fill-opacity="${options.fill.opacity}"
-                    stroke="none"
-                />
-                ${options.stroke.color !== "none" ? `
-                <circle 
-                    cx="${radius}"
-                    cy="${radius}"
-                    r="${radius - options.stroke.width / 2}"
-                    fill="none"
                     stroke="${options.stroke.color}"
                     stroke-width="${options.stroke.width}"
                     stroke-opacity="${options.stroke.opacity}"
                     stroke-dasharray="${options.stroke.dash.array.join(" ")}"
                     stroke-dashoffset="${options.stroke.dash.offset}"
                 />
-                ` : ""}
             </svg>
         `));
     }
 };
 exports.createCircle = createCircle;
+const createRect = (...args) => {
+    if (typeof args[0] === "number" && typeof args[1] === "number" && typeof args[2] === "number" && typeof args[3] === "number" && typeof args[4] === "number" && (typeof args[5] === "undefined" || (0, function_1.isShapeOption)(args[5]))) {
+        let width = args[0];
+        let height = args[1];
+        let x = args[2];
+        let y = args[3];
+        let round = args[4];
+        let options = args[5];
+        // init options
+        options ??= constant_1.ShapeOptionDefault;
+        options.fill ??= constant_1.FillOptionDefault;
+        options.fill.color ??= constant_1.FillOptionDefault.color;
+        options.fill.opacity ??= constant_1.FillOptionDefault.opacity;
+        options.stroke ??= constant_1.StrokeOptionDefault;
+        options.stroke.color ??= constant_1.StrokeOptionDefault.color;
+        options.stroke.width ??= constant_1.StrokeOptionDefault.width;
+        options.stroke.opacity ??= constant_1.StrokeOptionDefault.opacity;
+        options.stroke.dash ??= constant_1.DashOptionDefault;
+        options.stroke.dash.array ??= constant_1.DashOptionDefault.array;
+        options.stroke.dash.offset ??= constant_1.DashOptionDefault.offset;
+        return (0, sharp_1.default)(Buffer.from(`
+            <svg viewBox="0 0 ${width + x} ${height + y}">
+                <rect 
+                    width="${width - (options.stroke.color !== "none" ? options.stroke.width : 0)}"
+                    height="${height - (options.stroke.color !== "none" ? options.stroke.width : 0)}"
+                    x="${x + (options.stroke.color !== "none" ? options.stroke.width / 2 : 0)}"
+                    y="${y + (options.stroke.color !== "none" ? options.stroke.width / 2 : 0)}"
+                    rx="${round}"
+                    ry="${round}"
+                    fill="${options.fill.color}"
+                    fill-opacity="${options.fill.opacity}"
+                    stroke="${options.stroke.color}"
+                    stroke-width="${options.stroke.width}"
+                    stroke-opacity="${options.stroke.opacity}"
+                    stroke-dasharray="${options.stroke.dash.array.join(" ")}"
+                    stroke-dashoffset="${options.stroke.dash.offset}"
+                />
+            </svg>
+        `));
+    }
+    else if (typeof args[0] === "number" && typeof args[1] === "number" && typeof args[2] === "number" && typeof args[3] === "number" && (typeof args[4] === "undefined" || (0, function_1.isShapeOption)(args[4]))) {
+        let width = args[0];
+        let height = args[1];
+        let x = args[2];
+        let y = args[3];
+        let options = args[4];
+        // init options
+        options ??= constant_1.ShapeOptionDefault;
+        options.fill ??= constant_1.FillOptionDefault;
+        options.fill.color ??= constant_1.FillOptionDefault.color;
+        options.fill.opacity ??= constant_1.FillOptionDefault.opacity;
+        options.stroke ??= constant_1.StrokeOptionDefault;
+        options.stroke.color ??= constant_1.StrokeOptionDefault.color;
+        options.stroke.width ??= constant_1.StrokeOptionDefault.width;
+        options.stroke.opacity ??= constant_1.StrokeOptionDefault.opacity;
+        options.stroke.dash ??= constant_1.DashOptionDefault;
+        options.stroke.dash.array ??= constant_1.DashOptionDefault.array;
+        options.stroke.dash.offset ??= constant_1.DashOptionDefault.offset;
+        return (0, sharp_1.default)(Buffer.from(`
+            <svg viewBox="0 0 ${width + x} ${height + y}">
+                <rect 
+                    width="${width - (options.stroke.color !== "none" ? options.stroke.width : 0)}"
+                    height="${height - (options.stroke.color !== "none" ? options.stroke.width : 0)}"
+                    x="${x + (options.stroke.color !== "none" ? options.stroke.width / 2 : 0)}"
+                    y="${y + (options.stroke.color !== "none" ? options.stroke.width / 2 : 0)}"
+                    rx="0"
+                    ry="0"
+                    fill="${options.fill.color}"
+                    fill-opacity="${options.fill.opacity}"
+                    stroke="${options.stroke.color}"
+                    stroke-width="${options.stroke.width}"
+                    stroke-opacity="${options.stroke.opacity}"
+                    stroke-dasharray="${options.stroke.dash.array.join(" ")}"
+                    stroke-dashoffset="${options.stroke.dash.offset}"
+                />
+            </svg>
+        `));
+    }
+    else if (typeof args[0] === "number" && typeof args[1] === "number" && typeof args[2] === "number" && (typeof args[3] === "undefined" || (0, function_1.isShapeOption)(args[3]))) {
+        let width = args[0];
+        let height = args[1];
+        let round = args[2];
+        let options = args[3];
+        // init options
+        options ??= constant_1.ShapeOptionDefault;
+        options.fill ??= constant_1.FillOptionDefault;
+        options.fill.color ??= constant_1.FillOptionDefault.color;
+        options.fill.opacity ??= constant_1.FillOptionDefault.opacity;
+        options.stroke ??= constant_1.StrokeOptionDefault;
+        options.stroke.color ??= constant_1.StrokeOptionDefault.color;
+        options.stroke.width ??= constant_1.StrokeOptionDefault.width;
+        options.stroke.opacity ??= constant_1.StrokeOptionDefault.opacity;
+        options.stroke.dash ??= constant_1.DashOptionDefault;
+        options.stroke.dash.array ??= constant_1.DashOptionDefault.array;
+        options.stroke.dash.offset ??= constant_1.DashOptionDefault.offset;
+        return (0, sharp_1.default)(Buffer.from(`
+            <svg viewBox="0 0 ${width} ${height}">
+                <rect 
+                    width="${width - (options.stroke.color !== "none" ? options.stroke.width : 0)}"
+                    height="${height - (options.stroke.color !== "none" ? options.stroke.width : 0)}"
+                    x="${options.stroke.color !== "none" ? options.stroke.width / 2 : 0}"
+                    y="${options.stroke.color !== "none" ? options.stroke.width / 2 : 0}"
+                    rx="${round}"
+                    ry="${round}"
+                    fill="${options.fill.color}"
+                    fill-opacity="${options.fill.opacity}"
+                    stroke="${options.stroke.color}"
+                    stroke-width="${options.stroke.width}"
+                    stroke-opacity="${options.stroke.opacity}"
+                    stroke-dasharray="${options.stroke.dash.array.join(" ")}"
+                    stroke-dashoffset="${options.stroke.dash.offset}"
+                />
+            </svg>
+        `));
+    }
+    else {
+        let width = args[0];
+        let height = args[1];
+        let options = args[2];
+        // init options
+        options ??= constant_1.ShapeOptionDefault;
+        options.fill ??= constant_1.FillOptionDefault;
+        options.fill.color ??= constant_1.FillOptionDefault.color;
+        options.fill.opacity ??= constant_1.FillOptionDefault.opacity;
+        options.stroke ??= constant_1.StrokeOptionDefault;
+        options.stroke.color ??= constant_1.StrokeOptionDefault.color;
+        options.stroke.width ??= constant_1.StrokeOptionDefault.width;
+        options.stroke.opacity ??= constant_1.StrokeOptionDefault.opacity;
+        options.stroke.dash ??= constant_1.DashOptionDefault;
+        options.stroke.dash.array ??= constant_1.DashOptionDefault.array;
+        options.stroke.dash.offset ??= constant_1.DashOptionDefault.offset;
+        return (0, sharp_1.default)(Buffer.from(`
+        <svg viewBox="0 0 ${width} ${height}">
+            <rect 
+                width="${width}"
+                height="${height}"
+                x="0"
+                y="0"
+                rx="0"
+                ry="0"
+                fill="${options.fill.color}"
+                fill-opacity="${options.fill.opacity}"
+                stroke="${options.stroke.color}"
+                stroke-width="${options.stroke.width}"
+                stroke-opacity="${options.stroke.opacity}"
+                stroke-dasharray="${options.stroke.dash.array.join(" ")}"
+                stroke-dashoffset="${options.stroke.dash.offset}"
+            />
+        </svg>
+        `));
+    }
+};
+exports.createRect = createRect;
