@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Manju2367/maskForSharp.git"
+    "url": "git+https://github.com/Manju2367/sharpUtils.git"
   },
   "keywords": [
     "sharp",
@@ -20,9 +20,9 @@
   "author": "koshianmanju",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Manju2367/maskForSharp/issues"
+    "url": "https://github.com/Manju2367/sharpUtils/issues"
   },
-  "homepage": "https://github.com/Manju2367/maskForSharp#readme",
+  "homepage": "https://github.com/Manju2367/sharpUtils#readme",
   "dependencies": {
     "sharp": "^0.32.1"
   },
