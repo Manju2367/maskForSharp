@@ -1,5 +1,5 @@
 import sharp from "sharp"
-import { CoordinateOptions, FillOption, DashOption, StrokeOption, ShapeOption, CreateCircle, CreateRect  } from "./interface"
+import { CoordinateOptions, FillOption, DashOption, StrokeOption, ShapeOption, Circle, RoundedRect, Rect  } from "./interface"
 import { ShapeOptionDefault, FillOptionDefault, StrokeOptionDefault, DashOptionDefault } from "./constant"
 import { isShapeOption } from "./function"
 
@@ -83,47 +83,8 @@ export const mask = async (image: sharp.Sharp, mask: sharp.Sharp, options: Parti
     })
 }
 
-export const createCircle: CreateCircle = (...args: any): sharp.Sharp => {
-    if(typeof args[0] === "number" && typeof args[1] === "number" && typeof args[2] === "number" && typeof args[3] === "number" && typeof args[4] === "number" && (typeof args[5] === "undefined" || isShapeOption(args[5]))) {
-        let radius: number = args[0]
-        let cx: number = args[1]
-        let cy: number = args[2]
-        let width: number = args[3]
-        let height: number = args[4]
-        let options: ShapeOption|undefined = args[5]
-
-        // init options
-        options ??= ShapeOptionDefault
-        options.fill ??= FillOptionDefault
-        options.fill.color ??= FillOptionDefault.color
-        options.fill.opacity ??= FillOptionDefault.opacity
-        options.stroke ??= StrokeOptionDefault
-        options.stroke.color ??= StrokeOptionDefault.color
-        options.stroke.width ??= StrokeOptionDefault.width
-        options.stroke.opacity ??= StrokeOptionDefault.opacity
-        options.stroke.dash ??= DashOptionDefault
-        options.stroke.dash.array ??= DashOptionDefault.array
-        options.stroke.dash.offset ??= DashOptionDefault.offset
-
-
-
-        return sharp(Buffer.from(`
-            <svg viewBox="0 0 ${ width } ${ height }">
-                <circle 
-                    cx="${ cx }"
-                    cy="${ cy }"
-                    r="${ radius - (options.stroke.color !== "none" ? options.stroke.width/2 : 0) }"
-                    fill="${ options.fill.color }"
-                    fill-opacity="${ options.fill.opacity }"
-                    stroke="${ options.stroke.color }"
-                    stroke-width="${ options.stroke.width }"
-                    stroke-opacity="${ options.stroke.opacity }"
-                    stroke-dasharray="${ options.stroke.dash.array.join(" ") }"
-                    stroke-dashoffset="${ options.stroke.dash.offset }"
-                />
-            </svg>
-        `))
-    } else if(typeof args[0] === "number" && typeof args[1] === "number" && typeof args[2] === "number" && (typeof args[3] === "undefined" || isShapeOption(args[3]))) {
+export const circle: Circle = (...args: any): sharp.Sharp => {
+    if(typeof args[0] === "number" && typeof args[1] === "number" && typeof args[2] === "number" && (typeof args[3] === "undefined" || isShapeOption(args[3]))) {
         let radius: number = args[0]
         let cx: number = args[1]
         let cy: number = args[2]
@@ -131,6 +92,8 @@ export const createCircle: CreateCircle = (...args: any): sharp.Sharp => {
 
         // init options
         options ??= ShapeOptionDefault
+        options.imageWidth ??= radius + cx
+        options.imageHeight ??= radius + cy
         options.fill ??= FillOptionDefault
         options.fill.color ??= FillOptionDefault.color
         options.fill.opacity ??= FillOptionDefault.opacity
@@ -145,7 +108,7 @@ export const createCircle: CreateCircle = (...args: any): sharp.Sharp => {
 
 
         return sharp(Buffer.from(`
-            <svg viewBox="0 0 ${ radius + cx } ${ radius + cy }">
+            <svg viewBox="0 0 ${ options.imageWidth } ${ options.imageHeight }">
                 <circle 
                     cx="${ cx }"
                     cy="${ cy }"
@@ -160,12 +123,14 @@ export const createCircle: CreateCircle = (...args: any): sharp.Sharp => {
                 />
             </svg>
         `))
-    } else {
+    } else if(typeof args[0] === "number" && (typeof args[1] === "undefined" || isShapeOption(args[1]))) {
         let radius: number = args[0]
         let options: ShapeOption|undefined = args[1]
 
         // init options
         options ??= ShapeOptionDefault
+        options.imageWidth ??= radius * 2
+        options.imageHeight ??= radius * 2
         options.fill ??= FillOptionDefault
         options.fill.color ??= FillOptionDefault.color
         options.fill.opacity ??= FillOptionDefault.opacity
@@ -180,7 +145,7 @@ export const createCircle: CreateCircle = (...args: any): sharp.Sharp => {
 
 
         return sharp(Buffer.from(`
-            <svg viewBox="0 0 ${ radius*2 } ${ radius*2 }">
+            <svg viewBox="0 0 ${ options.imageWidth } ${ options.imageHeight }">
                 <circle 
                     cx="${ radius }"
                     cy="${ radius }"
@@ -195,10 +160,12 @@ export const createCircle: CreateCircle = (...args: any): sharp.Sharp => {
                 />
             </svg>
         `))
+    } else {
+        throw new Error("Unknown arguments exception")
     }
 }
 
-export const createRect: CreateRect = (...args: any): sharp.Sharp => {
+export const roundedRect: RoundedRect = (...args: any): sharp.Sharp => {
     if(typeof args[0] === "number" && typeof args[1] === "number" && typeof args[2] === "number" && typeof args[3] === "number" && typeof args[4] === "number" && (typeof args[5] === "undefined" || isShapeOption(args[5]))) {
         let width: number = args[0]
         let height: number = args[1]
@@ -209,6 +176,8 @@ export const createRect: CreateRect = (...args: any): sharp.Sharp => {
 
         // init options
         options ??= ShapeOptionDefault
+        options.imageWidth ??= width + x
+        options.imageHeight ??= height + y
         options.fill ??= FillOptionDefault
         options.fill.color ??= FillOptionDefault.color
         options.fill.opacity ??= FillOptionDefault.opacity
@@ -223,7 +192,7 @@ export const createRect: CreateRect = (...args: any): sharp.Sharp => {
 
      
         return sharp(Buffer.from(`
-            <svg viewBox="0 0 ${ width + x } ${ height + y }">
+            <svg viewBox="0 0 ${ options.imageWidth } ${ options.imageHeight }">
                 <rect 
                     width="${ width - (options.stroke.color !== "none" ? options.stroke.width : 0) }"
                     height="${ height - (options.stroke.color !== "none" ? options.stroke.width : 0) }"
@@ -231,47 +200,6 @@ export const createRect: CreateRect = (...args: any): sharp.Sharp => {
                     y="${ y + (options.stroke.color !== "none" ? options.stroke.width/2 : 0) }"
                     rx="${ round }"
                     ry="${ round }"
-                    fill="${ options.fill.color }"
-                    fill-opacity="${ options.fill.opacity }"
-                    stroke="${ options.stroke.color }"
-                    stroke-width="${ options.stroke.width }"
-                    stroke-opacity="${ options.stroke.opacity }"
-                    stroke-dasharray="${ options.stroke.dash.array.join(" ") }"
-                    stroke-dashoffset="${ options.stroke.dash.offset }"
-                />
-            </svg>
-        `))
-    } else if(typeof args[0] === "number" && typeof args[1] === "number" && typeof args[2] === "number" && typeof args[3] === "number" && (typeof args[4] === "undefined" || isShapeOption(args[4]))) {
-        let width: number = args[0]
-        let height: number = args[1]
-        let x: number = args[2]
-        let y: number = args[3]
-        let options: ShapeOption|undefined = args[4]
-
-        // init options
-        options ??= ShapeOptionDefault
-        options.fill ??= FillOptionDefault
-        options.fill.color ??= FillOptionDefault.color
-        options.fill.opacity ??= FillOptionDefault.opacity
-        options.stroke ??= StrokeOptionDefault
-        options.stroke.color ??= StrokeOptionDefault.color
-        options.stroke.width ??= StrokeOptionDefault.width
-        options.stroke.opacity ??= StrokeOptionDefault.opacity
-        options.stroke.dash ??= DashOptionDefault
-        options.stroke.dash.array ??= DashOptionDefault.array
-        options.stroke.dash.offset ??= DashOptionDefault.offset
-
-
-     
-        return sharp(Buffer.from(`
-            <svg viewBox="0 0 ${ width + x } ${ height + y }">
-                <rect 
-                    width="${ width - (options.stroke.color !== "none" ? options.stroke.width : 0) }"
-                    height="${ height - (options.stroke.color !== "none" ? options.stroke.width : 0) }"
-                    x="${ x + (options.stroke.color !== "none" ? options.stroke.width/2 : 0) }"
-                    y="${ y + (options.stroke.color !== "none" ? options.stroke.width/2 : 0) }"
-                    rx="0"
-                    ry="0"
                     fill="${ options.fill.color }"
                     fill-opacity="${ options.fill.opacity }"
                     stroke="${ options.stroke.color }"
@@ -290,45 +218,8 @@ export const createRect: CreateRect = (...args: any): sharp.Sharp => {
 
         // init options
         options ??= ShapeOptionDefault
-        options.fill ??= FillOptionDefault
-        options.fill.color ??= FillOptionDefault.color
-        options.fill.opacity ??= FillOptionDefault.opacity
-        options.stroke ??= StrokeOptionDefault
-        options.stroke.color ??= StrokeOptionDefault.color
-        options.stroke.width ??= StrokeOptionDefault.width
-        options.stroke.opacity ??= StrokeOptionDefault.opacity
-        options.stroke.dash ??= DashOptionDefault
-        options.stroke.dash.array ??= DashOptionDefault.array
-        options.stroke.dash.offset ??= DashOptionDefault.offset
-        
-
-
-        return sharp(Buffer.from(`
-            <svg viewBox="0 0 ${ width } ${ height }">
-                <rect 
-                    width="${ width - (options.stroke.color !== "none" ? options.stroke.width : 0) }"
-                    height="${ height - (options.stroke.color !== "none" ? options.stroke.width : 0) }"
-                    x="${ options.stroke.color !== "none" ? options.stroke.width/2 : 0 }"
-                    y="${ options.stroke.color !== "none" ? options.stroke.width/2 : 0 }"
-                    rx="${ round }"
-                    ry="${ round }"
-                    fill="${ options.fill.color }"
-                    fill-opacity="${ options.fill.opacity }"
-                    stroke="${ options.stroke.color }"
-                    stroke-width="${ options.stroke.width }"
-                    stroke-opacity="${ options.stroke.opacity }"
-                    stroke-dasharray="${ options.stroke.dash.array.join(" ") }"
-                    stroke-dashoffset="${ options.stroke.dash.offset }"
-                />
-            </svg>
-        `))
-    } else {
-        let width: number = args[0]
-        let height: number = args[1]
-        let options: ShapeOption|undefined = args[2]
-
-        // init options
-        options ??= ShapeOptionDefault
+        options.imageWidth ??= width
+        options.imageHeight ??= height
         options.fill ??= FillOptionDefault
         options.fill.color ??= FillOptionDefault.color
         options.fill.opacity ??= FillOptionDefault.opacity
@@ -343,14 +234,14 @@ export const createRect: CreateRect = (...args: any): sharp.Sharp => {
 
 
         return sharp(Buffer.from(`
-        <svg viewBox="0 0 ${ width } ${ height }">
+        <svg viewBox="0 0 ${ options.imageWidth } ${ options.imageHeight }">
             <rect 
                 width="${ width }"
                 height="${ height }"
                 x="0"
                 y="0"
-                rx="0"
-                ry="0"
+                rx="${ round }"
+                ry="${ round }"
                 fill="${ options.fill.color }"
                 fill-opacity="${ options.fill.opacity }"
                 stroke="${ options.stroke.color }"
@@ -361,5 +252,61 @@ export const createRect: CreateRect = (...args: any): sharp.Sharp => {
             />
         </svg>
         `))
+    } else {
+        throw new Error("Unknown arguments exception")
+    }
+}
+
+export const rect: Rect = (...args: any): sharp.Sharp => {
+    if(typeof args[0] === "number" && typeof args[1] === "number" && typeof args[2] === "number" && typeof args[3] === "number" && (typeof args[4] === "undefined" || isShapeOption(args[4]))) {
+        let width: number = args[0]
+        let height: number = args[1]
+        let x: number = args[2]
+        let y: number = args[3]
+        let options: ShapeOption|undefined = args[4]
+
+        // init options
+        options ??= ShapeOptionDefault
+        options.imageWidth ??= width + x
+        options.imageHeight ??= height + y
+        options.fill ??= FillOptionDefault
+        options.fill.color ??= FillOptionDefault.color
+        options.fill.opacity ??= FillOptionDefault.opacity
+        options.stroke ??= StrokeOptionDefault
+        options.stroke.color ??= StrokeOptionDefault.color
+        options.stroke.width ??= StrokeOptionDefault.width
+        options.stroke.opacity ??= StrokeOptionDefault.opacity
+        options.stroke.dash ??= DashOptionDefault
+        options.stroke.dash.array ??= DashOptionDefault.array
+        options.stroke.dash.offset ??= DashOptionDefault.offset
+
+
+     
+        return roundedRect(width, height, x, y, 0, options)
+    } else if(typeof args[0] === "number" && typeof args[1] === "number" && (typeof args[2] === "undefined" || isShapeOption(args[2]))) {
+        let width: number = args[0]
+        let height: number = args[1]
+        let options: ShapeOption|undefined = args[2]
+
+        // init options
+        options ??= ShapeOptionDefault
+        options.imageWidth ??= width
+        options.imageHeight ??= height
+        options.fill ??= FillOptionDefault
+        options.fill.color ??= FillOptionDefault.color
+        options.fill.opacity ??= FillOptionDefault.opacity
+        options.stroke ??= StrokeOptionDefault
+        options.stroke.color ??= StrokeOptionDefault.color
+        options.stroke.width ??= StrokeOptionDefault.width
+        options.stroke.opacity ??= StrokeOptionDefault.opacity
+        options.stroke.dash ??= DashOptionDefault
+        options.stroke.dash.array ??= DashOptionDefault.array
+        options.stroke.dash.offset ??= DashOptionDefault.offset
+
+
+
+        return roundedRect(width, height, 0, options)
+    } else {
+        throw new Error("Unknown arguments exception")
     }
 }
