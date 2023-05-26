@@ -1,6 +1,24 @@
-import { FillOption, DashOption, StrokeOption, ShapeOption } from "./interface"
+import { FillOption, DashOption, StrokeOption, ShapeOption, CoordinateOption } from "./interface"
 
 
+
+export const isCoordinateOption = (value: unknown): value is CoordinateOption => {
+    if(typeof value !== "object" || value === null) {
+        return false
+    }
+
+    const { x, y } = value as Record<keyof CoordinateOption, unknown>
+
+    if(typeof x !== "number" && typeof x !== "undefined") {
+        return false
+    }
+
+    if(typeof y !== "number" && typeof y !== "undefined") {
+        return false
+    }
+
+    return true
+}
 
 export const isFillOption = (value: unknown): value is FillOption => {
     if(typeof value !== "object" || value === null) {

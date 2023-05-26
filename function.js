@@ -1,6 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isShapeOption = exports.isStrokeOption = exports.isDashOption = exports.isFillOption = void 0;
+exports.isShapeOption = exports.isStrokeOption = exports.isDashOption = exports.isFillOption = exports.isCoordinateOption = void 0;
+const isCoordinateOption = (value) => {
+    if (typeof value !== "object" || value === null) {
+        return false;
+    }
+    const { x, y } = value;
+    if (typeof x !== "number" && typeof x !== "undefined") {
+        return false;
+    }
+    if (typeof y !== "number" && typeof y !== "undefined") {
+        return false;
+    }
+    return true;
+};
+exports.isCoordinateOption = isCoordinateOption;
 const isFillOption = (value) => {
     if (typeof value !== "object" || value === null) {
         return false;

@@ -4,7 +4,7 @@
   "description": "Sharpモジュールのutil的な",
   "main": "main.js",
   "scripts": {
-    "test": "node test/test.js",
+    "test": "npx tsc && node test/test.js",
     "start": "node main.js"
   },
   "repository": {

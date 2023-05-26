@@ -1,5 +1,5 @@
 import sharp from "sharp"
-import { CoordinateOptions, FillOption, DashOption, StrokeOption, ShapeOption, Circle, RoundedRect, Rect  } from "./interface"
+import { ShapeOption, Mask, Circle, RoundedRect, Rect, RegularPolygon  } from "./interface"
 import { ShapeOptionDefault, FillOptionDefault, StrokeOptionDefault, DashOptionDefault } from "./constant"
 import { isShapeOption } from "./function"
 
@@ -7,40 +7,30 @@ import { isShapeOption } from "./function"
 
 
 
-/**
- * imageに対してmaskを用いてマスク処理をします。
- * @param image 処理対称のsharpオブジェクト
- * @param mask マスク画像のsharpオブジェクト
- * @param options 
- * @param options.x maskを適応するx座標
- * @param options.y maskを適応するy座標
- * @returns 
- */
-export const mask = async (image: sharp.Sharp, mask: sharp.Sharp, options: Partial<CoordinateOptions> = {
-    x: 0,
-    y: 0 
-}): Promise<sharp.Sharp> => {
-    options ??= {
-        x: 0,
-        y: 0
-    }
-    options.x ??= 0
-    options.y ??= 0
-
+export const mask: Mask = async (image, mask, options?): Promise<sharp.Sharp> => {
     if((await image.metadata()).channels === 3) image.ensureAlpha(1)
 
     return new Promise((resolve, reject) => {
         image.raw().toBuffer(async (err, data, info) => {
             if(!err) {
-                let maskWidth = ((await mask.metadata()).width ?? 0) + (options.x ?? 0)
-                let maskHeight = ((await mask.metadata()).height ?? 0) + (options.y ?? 0)
+                options ??= {
+                    x: 0,
+                    y: 0
+                }
+                options.x ??= 0
+                options.y ??= 0
+
+
+
+                let maskWidth = ((await mask.metadata()).width ?? 0) + options.x
+                let maskHeight = ((await mask.metadata()).height ?? 0) + options.y
 
                 if(maskWidth > info.width || maskHeight > info.height) {
                     mask.extract({
                         left: 0,
                         top: 0,
-                        width: maskWidth > info.width ? info.width - (options.x ?? 0) : (maskWidth - (options.x ?? 0)),
-                        height: maskHeight > info.height ? info.height - (options.y ?? 0) : (maskHeight - (options.y ?? 0))
+                        width: maskWidth > info.width ? info.width - options.x : (maskWidth - options.x),
+                        height: maskHeight > info.height ? info.height - options.y : (maskHeight - options.y)
                     })
                 }
 
@@ -309,4 +299,20 @@ export const rect: Rect = (...args: any): sharp.Sharp => {
     } else {
         throw new Error("Unknown arguments exception")
     }
+}
+
+export const regularPolygon: RegularPolygon = (n, r, options?): sharp.Sharp => {
+    let points: Array<string> = []
+    let angle: number = 0
+    for(let i = 0; i < n; i++) {
+        points.push(`${ Math.sin(angle)*r + r },${ Math.cos(angle)*r + r }`)
+
+        angle += 2*Math.PI / n
+    }
+
+    return sharp(Buffer.from(`
+        <svg viewBox="0 0 ${ r * 2 } ${ r * 2 }">
+            <polygon points="${ points.join(" ") }" />
+        </svg>
+    `))
 }
