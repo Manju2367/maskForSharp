@@ -1,3 +1,5 @@
+sharp-utils / [Modules](modules.md)
+
 # sharp-utils
 Node.jsの画像処理モジュールである[sharp](https://www.npmjs.com/package/sharp)のプラグイン的なモジュールです。
 
@@ -50,10 +52,5 @@ mask(sampleImage, maskImage).then(maskedImage => {
 #### 結果
 ![マスク処理後の画像](./sample/masked.png "マスク処理後の画像")
 *masked.png*
-
-
-
-
-
 
 <script src="https://blz-soft.github.io/md_style/release/v1.2/md_style.js" ></script>

@@ -6,7 +6,7 @@
   "scripts": {
     "test": "npx tsc && node test/test.js",
     "start": "node main.js",
-    "doc": "npx typedoc main.ts interface.ts"
+    "doc": "npx typedoc --plugin typedoc-plugin-markdown --out docs main.ts interface.ts"
   },
   "repository": {
     "type": "git",
@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
-    "typedoc": "^0.24.7"
+    "typedoc": "^0.24.7",
+    "typedoc-plugin-markdown": "^3.15.3"
   }
 }
