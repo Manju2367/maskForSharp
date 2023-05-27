@@ -22,7 +22,7 @@ default: []
 
 #### Defined in
 
-[interface.ts:29](https://github.com/Manju2367/sharpUtils/blob/27aec64/interface.ts#L29)
+[interface.ts:29](https://github.com/Manju2367/sharpUtils/blob/88cc34b/interface.ts#L29)
 
 ___
 
@@ -35,4 +35,4 @@ default: 0
 
 #### Defined in
 
-[interface.ts:35](https://github.com/Manju2367/sharpUtils/blob/27aec64/interface.ts#L35)
+[interface.ts:35](https://github.com/Manju2367/sharpUtils/blob/88cc34b/interface.ts#L35)

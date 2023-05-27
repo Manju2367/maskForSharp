@@ -31,7 +31,7 @@
 
 #### Defined in
 
-[interface.ts:116](https://github.com/Manju2367/sharpUtils/blob/27aec64/interface.ts#L116)
+[interface.ts:116](https://github.com/Manju2367/sharpUtils/blob/88cc34b/interface.ts#L116)
 
 ### Circle
 
@@ -56,4 +56,4 @@
 
 #### Defined in
 
-[interface.ts:124](https://github.com/Manju2367/sharpUtils/blob/27aec64/interface.ts#L124)
+[interface.ts:124](https://github.com/Manju2367/sharpUtils/blob/88cc34b/interface.ts#L124)

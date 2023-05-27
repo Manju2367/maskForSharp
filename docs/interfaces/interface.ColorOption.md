@@ -39,7 +39,7 @@ color option
 
 #### Defined in
 
-[interface.ts:49](https://github.com/Manju2367/sharpUtils/blob/27aec64/interface.ts#L49)
+[interface.ts:49](https://github.com/Manju2367/sharpUtils/blob/88cc34b/interface.ts#L49)
 
 ___
 
@@ -52,4 +52,4 @@ default: 1
 
 #### Defined in
 
-[interface.ts:55](https://github.com/Manju2367/sharpUtils/blob/27aec64/interface.ts#L55)
+[interface.ts:55](https://github.com/Manju2367/sharpUtils/blob/88cc34b/interface.ts#L55)

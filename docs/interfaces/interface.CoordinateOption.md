@@ -21,7 +21,7 @@ x座標
 
 #### Defined in
 
-[interface.ts:16](https://github.com/Manju2367/sharpUtils/blob/27aec64/interface.ts#L16)
+[interface.ts:16](https://github.com/Manju2367/sharpUtils/blob/88cc34b/interface.ts#L16)
 
 ___
 
@@ -33,4 +33,4 @@ y座標
 
 #### Defined in
 
-[interface.ts:21](https://github.com/Manju2367/sharpUtils/blob/27aec64/interface.ts#L21)
+[interface.ts:21](https://github.com/Manju2367/sharpUtils/blob/88cc34b/interface.ts#L21)

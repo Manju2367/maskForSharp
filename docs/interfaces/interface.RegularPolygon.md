@@ -32,7 +32,7 @@
 
 #### Defined in
 
-[interface.ts:183](https://github.com/Manju2367/sharpUtils/blob/27aec64/interface.ts#L183)
+[interface.ts:183](https://github.com/Manju2367/sharpUtils/blob/88cc34b/interface.ts#L183)
 
 ### RegularPolygon
 
@@ -58,4 +58,4 @@
 
 #### Defined in
 
-[interface.ts:192](https://github.com/Manju2367/sharpUtils/blob/27aec64/interface.ts#L192)
+[interface.ts:192](https://github.com/Manju2367/sharpUtils/blob/88cc34b/interface.ts#L192)

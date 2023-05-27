@@ -24,4 +24,4 @@
 
 #### Defined in
 
-[interface.ts:104](https://github.com/Manju2367/sharpUtils/blob/27aec64/interface.ts#L104)
+[interface.ts:104](https://github.com/Manju2367/sharpUtils/blob/88cc34b/interface.ts#L104)

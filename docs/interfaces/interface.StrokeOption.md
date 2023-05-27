@@ -43,7 +43,7 @@ color option
 
 #### Defined in
 
-[interface.ts:49](https://github.com/Manju2367/sharpUtils/blob/27aec64/interface.ts#L49)
+[interface.ts:49](https://github.com/Manju2367/sharpUtils/blob/88cc34b/interface.ts#L49)
 
 ___
 
@@ -55,7 +55,7 @@ dashオプション
 
 #### Defined in
 
-[interface.ts:72](https://github.com/Manju2367/sharpUtils/blob/27aec64/interface.ts#L72)
+[interface.ts:72](https://github.com/Manju2367/sharpUtils/blob/88cc34b/interface.ts#L72)
 
 ___
 
@@ -72,7 +72,7 @@ default: 1
 
 #### Defined in
 
-[interface.ts:55](https://github.com/Manju2367/sharpUtils/blob/27aec64/interface.ts#L55)
+[interface.ts:55](https://github.com/Manju2367/sharpUtils/blob/88cc34b/interface.ts#L55)
 
 ___
 
@@ -85,4 +85,4 @@ default: 1
 
 #### Defined in
 
-[interface.ts:67](https://github.com/Manju2367/sharpUtils/blob/27aec64/interface.ts#L67)
+[interface.ts:67](https://github.com/Manju2367/sharpUtils/blob/88cc34b/interface.ts#L67)
