@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "test": "npx tsc && node test/test.js",
-    "start": "node main.js"
+    "start": "node main.js",
+    "doc": "npx typedoc main.ts interface.ts"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
     "sharp": "^0.32.1"
   },
   "devDependencies": {
-    "@types/node": "^20.0.0"
+    "@types/node": "^20.0.0",
+    "typedoc": "^0.24.7"
   }
 }
