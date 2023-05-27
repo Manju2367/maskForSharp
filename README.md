@@ -9,7 +9,7 @@ npm i sharp-utils
 ```
 
 ## Documentation
-[ドキュメント](./docs/index.html)
+[ドキュメント](./docs/modules.md)
 
 ## Examples
 
