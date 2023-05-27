@@ -1,11 +1,12 @@
 import sharp from "sharp"
+import { UnknownArgumentsError } from "./exception"
 
 
 
 
 
 //---------------------------------------
-// Option interfaces
+// Interfaces define options
 //---------------------------------------
 
 export interface CoordinateOption {
@@ -96,7 +97,7 @@ export interface ShapeOption {
 
 
 //---------------------------------------
-// Function interfaces
+// Interfaces define function
 //---------------------------------------
 
 export interface Mask {
@@ -110,6 +111,7 @@ export interface Circle {
      * @param cx 円の中心のx座標
      * @param cy 円の中心のy座標
      * @param options オプション
+     * @throws {UnknownArgumentsError} 不明な引数が与えられた場合
      */
     (radius: number, cx: number, cy: number, options?: Partial<ShapeOption>): sharp.Sharp
 
@@ -117,6 +119,7 @@ export interface Circle {
      * 円を描画します。
      * @param radius 円の半径
      * @param options オプション
+     * @throws {UnknownArgumentsError} 不明な引数が与えられた場合
      */
     (radius: number, options?: Partial<ShapeOption>): sharp.Sharp
 }
@@ -130,6 +133,7 @@ export interface RoundedRect {
      * @param y 長方形のy座標
      * @param round 角丸の半径
      * @param options オプション
+     * @throws {UnknownArgumentsError} 不明な引数が与えられた場合
      */
     (width: number, height: number, x: number, y: number, round: number, options?: Partial<ShapeOption>): sharp.Sharp
 
@@ -139,6 +143,7 @@ export interface RoundedRect {
      * @param height 長方形の縦幅
      * @param round 角丸の半径
      * @param options オプション
+     * @throws {UnknownArgumentsError} 不明な引数が与えられた場合
      */
     (width: number, height: number, round: number, options?: Partial<ShapeOption>): sharp.Sharp
 }
@@ -151,6 +156,7 @@ export interface Rect {
      * @param x 長方形のx座標
      * @param y 長方形のy座標
      * @param options オプション
+     * @throws {UnknownArgumentsError} 不明な引数が与えられた場合
      */
     (width: number, height: number, x: number, y: number, options?: Partial<ShapeOption>): sharp.Sharp
 
@@ -159,6 +165,7 @@ export interface Rect {
      * @param width 長方形の横幅
      * @param height 長方形の縦幅
      * @param options オプション
+     * @throws {UnknownArgumentsError} 不明な引数が与えられた場合
      */
     (width: number, height: number, options?: Partial<ShapeOption>): sharp.Sharp
 }
@@ -168,7 +175,19 @@ export interface RegularPolygon {
      * 正多角形を描画します。
      * @param n 頂点の数
      * @param r 正多角形が外接する円の半径
+     * @param rx 正多角形が外接する円の中心のx座標
+     * @param ry 正多角形が外接する円の中心のy座標
      * @param oprions オプション
+     * @throws {UnknownArgumentsError} 不明な引数が与えられた場合
+     */
+    (n: number, r: number, rx: number, ry: number, options?: Partial<ShapeOption>): sharp.Sharp
+
+    /**
+     * 正多角形を描画します。
+     * @param n 頂点の数
+     * @param r 正多角形が外接する円の半径
+     * @param oprions オプション
+     * @throws {UnknownArgumentsError} 不明な引数が与えられた場合
      */
     (n: number, r: number, options?: Partial<ShapeOption>): sharp.Sharp
 }

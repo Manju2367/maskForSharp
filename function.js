@@ -1,6 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isShapeOption = exports.isStrokeOption = exports.isDashOption = exports.isFillOption = exports.isCoordinateOption = void 0;
+exports.isShapeOption = exports.isStrokeOption = exports.isDashOption = exports.isFillOption = exports.isCoordinateOption = exports.getImageInfo = void 0;
+//---------------------------------------
+// Functions
+//---------------------------------------
+const getImageInfo = (s) => {
+    return new Promise((resolve, reject) => {
+        s.toBuffer((err, buffer, info) => {
+            if (!err) {
+                resolve(info);
+            }
+            else {
+                reject(err);
+            }
+        });
+    });
+};
+exports.getImageInfo = getImageInfo;
+//---------------------------------------
+// Functions check type
+//---------------------------------------
 const isCoordinateOption = (value) => {
     if (typeof value !== "object" || value === null) {
         return false;

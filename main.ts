@@ -1,7 +1,8 @@
 import sharp from "sharp"
 import { ShapeOption, Mask, Circle, RoundedRect, Rect, RegularPolygon  } from "./interface"
 import { ShapeOptionDefault, FillOptionDefault, StrokeOptionDefault, DashOptionDefault } from "./constant"
-import { isShapeOption } from "./function"
+import { getImageInfo, isShapeOption } from "./function"
+import { UnknownArgumentsError } from "./exception"
 
 
 
@@ -22,10 +23,12 @@ export const mask: Mask = async (image, mask, options?): Promise<sharp.Sharp> =>
 
 
 
-                let maskWidth = ((await mask.metadata()).width ?? 0) + options.x
-                let maskHeight = ((await mask.metadata()).height ?? 0) + options.y
+                let maskInfo = await getImageInfo(mask)
+                let maskWidth = maskInfo.width + options.x
+                let maskHeight = maskInfo.height + options.y
 
                 if(maskWidth > info.width || maskHeight > info.height) {
+                    console.log("extract")
                     mask.extract({
                         left: 0,
                         top: 0,
@@ -34,7 +37,6 @@ export const mask: Mask = async (image, mask, options?): Promise<sharp.Sharp> =>
                     })
                 }
 
-                let maskBuffer = await mask.toBuffer()
                 let paste = await sharp({
                     create: {
                         channels: 4,
@@ -48,14 +50,14 @@ export const mask: Mask = async (image, mask, options?): Promise<sharp.Sharp> =>
                         height: info.height
                     }
                 }).composite([{
-                    input: maskBuffer,
+                    input: await mask.toBuffer(),
                     left: options.x,
                     top: options.y
                 }]).grayscale().raw().toBuffer()
                 
                 data.forEach((v: number, i: number) => {
-                    if((i + 1) % 4 === 0) {
-                        data[i] *= paste[(i + 1)/4] / 0xFF
+                    if((i - 3) % 4 === 0) {
+                        data[i] *= paste[(i - 3)/4] / 0xFF
                     }
                 })
 
@@ -151,7 +153,7 @@ export const circle: Circle = (...args: any): sharp.Sharp => {
             </svg>
         `))
     } else {
-        throw new Error("Unknown arguments exception")
+        throw new UnknownArgumentsError("Unknown arguments exception")
     }
 }
 
@@ -226,10 +228,10 @@ export const roundedRect: RoundedRect = (...args: any): sharp.Sharp => {
         return sharp(Buffer.from(`
         <svg viewBox="0 0 ${ options.imageWidth } ${ options.imageHeight }">
             <rect 
-                width="${ width }"
-                height="${ height }"
-                x="0"
-                y="0"
+                width="${ width - (options.stroke.color !== "none" ? options.stroke.width : 0) }"
+                height="${ height - (options.stroke.color !== "none" ? options.stroke.width : 0) }"
+                x="${ (options.stroke.color !== "none" ? options.stroke.width/2 : 0) }"
+                y="${ (options.stroke.color !== "none" ? options.stroke.width/2 : 0) }"
                 rx="${ round }"
                 ry="${ round }"
                 fill="${ options.fill.color }"
@@ -243,7 +245,7 @@ export const roundedRect: RoundedRect = (...args: any): sharp.Sharp => {
         </svg>
         `))
     } else {
-        throw new Error("Unknown arguments exception")
+        throw new UnknownArgumentsError("Unknown arguments exception")
     }
 }
 
@@ -255,21 +257,6 @@ export const rect: Rect = (...args: any): sharp.Sharp => {
         let y: number = args[3]
         let options: ShapeOption|undefined = args[4]
 
-        // init options
-        options ??= ShapeOptionDefault
-        options.imageWidth ??= width + x
-        options.imageHeight ??= height + y
-        options.fill ??= FillOptionDefault
-        options.fill.color ??= FillOptionDefault.color
-        options.fill.opacity ??= FillOptionDefault.opacity
-        options.stroke ??= StrokeOptionDefault
-        options.stroke.color ??= StrokeOptionDefault.color
-        options.stroke.width ??= StrokeOptionDefault.width
-        options.stroke.opacity ??= StrokeOptionDefault.opacity
-        options.stroke.dash ??= DashOptionDefault
-        options.stroke.dash.array ??= DashOptionDefault.array
-        options.stroke.dash.offset ??= DashOptionDefault.offset
-
 
      
         return roundedRect(width, height, x, y, 0, options)
@@ -278,10 +265,26 @@ export const rect: Rect = (...args: any): sharp.Sharp => {
         let height: number = args[1]
         let options: ShapeOption|undefined = args[2]
 
+
+
+        return roundedRect(width, height, 0, options)
+    } else {
+        throw new UnknownArgumentsError("Unknown arguments exception")
+    }
+}
+
+export const regularPolygon: RegularPolygon = (...args: any): sharp.Sharp => {
+    if(typeof args[0] === "number" && typeof args[1] === "number" && typeof args[2] === "number" && typeof args[3] === "number" && (typeof args[4] === "undefined" || isShapeOption(args[4]))) {
+        let n: number = args[0]
+        let r: number = args[1]
+        let rx: number = args[2]
+        let ry: number = args[3]
+        let options: ShapeOption|undefined = args[4]
+
         // init options
         options ??= ShapeOptionDefault
-        options.imageWidth ??= width
-        options.imageHeight ??= height
+        options.imageWidth ??= rx + r
+        options.imageHeight ??= ry + r
         options.fill ??= FillOptionDefault
         options.fill.color ??= FillOptionDefault.color
         options.fill.opacity ??= FillOptionDefault.opacity
@@ -295,24 +298,80 @@ export const rect: Rect = (...args: any): sharp.Sharp => {
 
 
 
-        return roundedRect(width, height, 0, options)
+        let points: Array<string> = []
+        let angle: number = Math.PI
+        // 内側の頂点と外側の頂点の距離
+        let strokeWidthCos = options.stroke.color !== "none" ?
+            options.stroke.width / Math.cos(Math.PI/2 - ((Math.PI * (n - 2)) / (2*n))) :
+            0
+        for(let i = 0; i < n; i++) {
+            points.push(`${ Math.sin(angle) * (r - strokeWidthCos) + rx },${ Math.cos(angle) * (r - strokeWidthCos) + ry }`)
+            angle += 2*Math.PI / n
+        }
+    
+        return sharp(Buffer.from(`
+            <svg viewBox="0 0 ${ options.imageWidth } ${ options.imageHeight }">
+                <polygon 
+                    points="${ points.join(" ") }"
+                    fill="${ options.fill.color }"
+                    fill-opacity="${ options.fill.opacity }"
+                    stroke="${ options.stroke.color }"
+                    stroke-width="${ options.stroke.width*2 }"
+                    stroke-opacity="${ options.stroke.opacity }"
+                    stroke-dasharray="${ options.stroke.dash.array.join(" ") }"
+                    stroke-dashoffset="${ options.stroke.dash.offset }"
+                />
+            </svg>
+        `))
+    } else if(typeof args[0] === "number" && typeof args[1] === "number" && (typeof args[2] === "undefined" || isShapeOption(args[2]))) {
+        let n: number = args[0]
+        let r: number = args[1]
+        let options: ShapeOption|undefined = args[2]
+
+        // init options
+        options ??= ShapeOptionDefault
+        options.imageWidth ??= r * 2
+        options.imageHeight ??= r * 2
+        options.fill ??= FillOptionDefault
+        options.fill.color ??= FillOptionDefault.color
+        options.fill.opacity ??= FillOptionDefault.opacity
+        options.stroke ??= StrokeOptionDefault
+        options.stroke.color ??= StrokeOptionDefault.color
+        options.stroke.width ??= StrokeOptionDefault.width
+        options.stroke.opacity ??= StrokeOptionDefault.opacity
+        options.stroke.dash ??= DashOptionDefault
+        options.stroke.dash.array ??= DashOptionDefault.array
+        options.stroke.dash.offset ??= DashOptionDefault.offset
+
+
+
+        let points: Array<string> = []
+        let angle: number = Math.PI
+        // 内側の頂点と外側の頂点の距離
+        let strokeWidthCos = options.stroke.color !== "none" ?
+            options.stroke.width / Math.cos(Math.PI/2 - ((Math.PI * (n - 2)) / (2*n))) :
+            0
+        console.log(strokeWidthCos)
+        for(let i = 0; i < n; i++) {
+            points.push(`${ Math.sin(angle) * (r - strokeWidthCos) + r },${ Math.cos(angle) * (r - strokeWidthCos) + r }`)
+            angle += 2*Math.PI / n
+        }
+    
+        return sharp(Buffer.from(`
+            <svg viewBox="0 0 ${ options.imageWidth } ${ options.imageHeight }">
+                <polygon 
+                    points="${ points.join(" ") }"
+                    fill="${ options.fill.color }"
+                    fill-opacity="${ options.fill.opacity }"
+                    stroke="${ options.stroke.color }"
+                    stroke-width="${ options.stroke.width*2 }"
+                    stroke-opacity="${ options.stroke.opacity }"
+                    stroke-dasharray="${ options.stroke.dash.array.join(" ") }"
+                    stroke-dashoffset="${ options.stroke.dash.offset }"
+                />
+            </svg>
+        `))
     } else {
-        throw new Error("Unknown arguments exception")
+        throw new UnknownArgumentsError("Unknown arguments exception")
     }
-}
-
-export const regularPolygon: RegularPolygon = (n, r, options?): sharp.Sharp => {
-    let points: Array<string> = []
-    let angle: number = 0
-    for(let i = 0; i < n; i++) {
-        points.push(`${ Math.sin(angle)*r + r },${ Math.cos(angle)*r + r }`)
-
-        angle += 2*Math.PI / n
-    }
-
-    return sharp(Buffer.from(`
-        <svg viewBox="0 0 ${ r * 2 } ${ r * 2 }">
-            <polygon points="${ points.join(" ") }" />
-        </svg>
-    `))
 }

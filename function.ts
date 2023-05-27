@@ -1,6 +1,29 @@
+import sharp from "sharp"
 import { FillOption, DashOption, StrokeOption, ShapeOption, CoordinateOption } from "./interface"
 
 
+
+//---------------------------------------
+// Functions
+//---------------------------------------
+
+export const getImageInfo = (s: sharp.Sharp): Promise<sharp.OutputInfo> => {
+    return new Promise((resolve, reject) => {
+        s.toBuffer((err, buffer, info) => {
+            if(!err) {
+                resolve(info)
+            } else {
+                reject(err)
+            }
+        })
+    })
+}
+
+
+
+//---------------------------------------
+// Functions check type
+//---------------------------------------
 
 export const isCoordinateOption = (value: unknown): value is CoordinateOption => {
     if(typeof value !== "object" || value === null) {
