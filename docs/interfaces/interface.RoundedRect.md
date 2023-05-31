@@ -25,7 +25,7 @@
 | `x` | `number` | 長方形のx座標 |
 | `y` | `number` | 長方形のy座標 |
 | `round` | `number` | 角丸の半径 |
-| `options?` | `Partial`<[`ShapeOption`](interface.ShapeOption.md)\> | オプション |
+| `options?` | `Partial`<[`ShapeOptions`](interface.ShapeOptions.md)\> | オプション |
 
 #### Returns
 
@@ -33,7 +33,7 @@
 
 #### Defined in
 
-[interface.ts:138](https://github.com/Manju2367/sharpUtils/blob/88cc34b/interface.ts#L138)
+[interface.ts:138](https://github.com/Manju2367/sharpUtils/blob/6d980e5/interface.ts#L138)
 
 ### RoundedRect
 
@@ -52,7 +52,7 @@
 | `width` | `number` | 長方形の横幅 |
 | `height` | `number` | 長方形の縦幅 |
 | `round` | `number` | 角丸の半径 |
-| `options?` | `Partial`<[`ShapeOption`](interface.ShapeOption.md)\> | オプション |
+| `options?` | `Partial`<[`ShapeOptions`](interface.ShapeOptions.md)\> | オプション |
 
 #### Returns
 
@@ -60,4 +60,4 @@
 
 #### Defined in
 
-[interface.ts:148](https://github.com/Manju2367/sharpUtils/blob/88cc34b/interface.ts#L148)
+[interface.ts:148](https://github.com/Manju2367/sharpUtils/blob/6d980e5/interface.ts#L148)

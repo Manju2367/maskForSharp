@@ -24,7 +24,7 @@
 | `height` | `number` | 長方形の縦幅 |
 | `x` | `number` | 長方形のx座標 |
 | `y` | `number` | 長方形のy座標 |
-| `options?` | `Partial`<[`ShapeOption`](interface.ShapeOption.md)\> | オプション |
+| `options?` | `Partial`<[`ShapeOptions`](interface.ShapeOptions.md)\> | オプション |
 
 #### Returns
 
@@ -32,7 +32,7 @@
 
 #### Defined in
 
-[interface.ts:161](https://github.com/Manju2367/sharpUtils/blob/88cc34b/interface.ts#L161)
+[interface.ts:161](https://github.com/Manju2367/sharpUtils/blob/6d980e5/interface.ts#L161)
 
 ### Rect
 
@@ -50,7 +50,7 @@
 | :------ | :------ | :------ |
 | `width` | `number` | 長方形の横幅 |
 | `height` | `number` | 長方形の縦幅 |
-| `options?` | `Partial`<[`ShapeOption`](interface.ShapeOption.md)\> | オプション |
+| `options?` | `Partial`<[`ShapeOptions`](interface.ShapeOptions.md)\> | オプション |
 
 #### Returns
 
@@ -58,4 +58,4 @@
 
 #### Defined in
 
-[interface.ts:170](https://github.com/Manju2367/sharpUtils/blob/88cc34b/interface.ts#L170)
+[interface.ts:170](https://github.com/Manju2367/sharpUtils/blob/6d980e5/interface.ts#L170)

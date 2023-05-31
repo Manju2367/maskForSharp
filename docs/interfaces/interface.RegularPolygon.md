@@ -24,7 +24,7 @@
 | `r` | `number` | 正多角形が外接する円の半径 |
 | `rx` | `number` | 正多角形が外接する円の中心のx座標 |
 | `ry` | `number` | 正多角形が外接する円の中心のy座標 |
-| `options?` | `Partial`<[`ShapeOption`](interface.ShapeOption.md)\> | - |
+| `options?` | `Partial`<[`ShapeOptions`](interface.ShapeOptions.md)\> | オプション |
 
 #### Returns
 
@@ -32,7 +32,7 @@
 
 #### Defined in
 
-[interface.ts:183](https://github.com/Manju2367/sharpUtils/blob/88cc34b/interface.ts#L183)
+[interface.ts:183](https://github.com/Manju2367/sharpUtils/blob/6d980e5/interface.ts#L183)
 
 ### RegularPolygon
 
@@ -50,7 +50,7 @@
 | :------ | :------ | :------ |
 | `n` | `number` | 頂点の数 |
 | `r` | `number` | 正多角形が外接する円の半径 |
-| `options?` | `Partial`<[`ShapeOption`](interface.ShapeOption.md)\> | - |
+| `options?` | `Partial`<[`ShapeOptions`](interface.ShapeOptions.md)\> | オプション |
 
 #### Returns
 
@@ -58,4 +58,4 @@
 
 #### Defined in
 
-[interface.ts:192](https://github.com/Manju2367/sharpUtils/blob/88cc34b/interface.ts#L192)
+[interface.ts:192](https://github.com/Manju2367/sharpUtils/blob/6d980e5/interface.ts#L192)

@@ -1,5 +1,5 @@
 import sharp from "sharp"
-import { FillOption, DashOption, StrokeOption, ShapeOption, CoordinateOption } from "./interface"
+import { FillOptions, DashOptions, StrokeOptions, ShapeOptions, CoordinateOptions } from "./interface"
 
 
 
@@ -25,12 +25,12 @@ export const getImageInfo = (s: sharp.Sharp): Promise<sharp.OutputInfo> => {
 // Functions check type
 //---------------------------------------
 
-export const isCoordinateOption = (value: unknown): value is CoordinateOption => {
+export const isCoordinateOption = (value: unknown): value is CoordinateOptions => {
     if(typeof value !== "object" || value === null) {
         return false
     }
 
-    const { x, y } = value as Record<keyof CoordinateOption, unknown>
+    const { x, y } = value as Record<keyof CoordinateOptions, unknown>
 
     if(typeof x !== "number" && typeof x !== "undefined") {
         return false
@@ -43,12 +43,12 @@ export const isCoordinateOption = (value: unknown): value is CoordinateOption =>
     return true
 }
 
-export const isFillOption = (value: unknown): value is FillOption => {
+export const isFillOption = (value: unknown): value is FillOptions => {
     if(typeof value !== "object" || value === null) {
         return false
     }
 
-    const { color, opacity } = value as Record<keyof FillOption, unknown>
+    const { color, opacity } = value as Record<keyof FillOptions, unknown>
 
     if(typeof color !== "string" && typeof color !== "undefined") {
         return false
@@ -61,12 +61,12 @@ export const isFillOption = (value: unknown): value is FillOption => {
     return true
 }
 
-export const isDashOption = (value: unknown): value is DashOption => {
+export const isDashOption = (value: unknown): value is DashOptions => {
     if(typeof value !== "object" || value === null) {
         return false
     }
 
-    const { array, offset } = value as Record<keyof DashOption, unknown>
+    const { array, offset } = value as Record<keyof DashOptions, unknown>
 
     if(!(array instanceof Array<number>) && typeof array !== "undefined") {
         return false
@@ -79,12 +79,12 @@ export const isDashOption = (value: unknown): value is DashOption => {
     return true
 }
 
-export const isStrokeOption = (value: unknown): value is StrokeOption => {
+export const isStrokeOption = (value: unknown): value is StrokeOptions => {
     if(typeof value !== "object" || value === null) {
         return false
     }
 
-    const { color, width, opacity, dash } = value as Record<keyof StrokeOption, unknown>
+    const { color, width, opacity, dash } = value as Record<keyof StrokeOptions, unknown>
 
     if(typeof color !== "string" && typeof color !== "undefined") {
         return false
@@ -105,12 +105,12 @@ export const isStrokeOption = (value: unknown): value is StrokeOption => {
     return true
 }
 
-export const isShapeOption = (value: unknown): value is ShapeOption => {
+export const isShapeOption = (value: unknown): value is ShapeOptions => {
     if(typeof value !== "object" || value === null) {
         return false
     }
 
-    const { fill, stroke } = value as Record<keyof ShapeOption, unknown>
+    const { fill, stroke } = value as Record<keyof ShapeOptions, unknown>
 
     if(!isFillOption(fill) && typeof fill !== "undefined") {
         return false

@@ -3,8 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.regularPolygon = exports.rect = exports.roundedRect = exports.circle = exports.mask = void 0;
+exports.TextToImage = exports.regularPolygon = exports.rect = exports.roundedRect = exports.circle = exports.mask = void 0;
 const sharp_1 = __importDefault(require("sharp"));
+const text_to_svg_1 = __importDefault(require("text-to-svg"));
 const constant_1 = require("./constant");
 const function_1 = require("./function");
 const exception_1 = require("./exception");
@@ -346,3 +347,72 @@ const regularPolygon = (...args) => {
     }
 };
 exports.regularPolygon = regularPolygon;
+class TextToImage {
+    renderer;
+    options;
+    constructor(fontLocation, options) {
+        this.renderer = text_to_svg_1.default.loadSync(fontLocation);
+        // init options default value
+        this.options = typeof options === "undefined" ? {
+            x: 0,
+            y: 0,
+            fontSize: 72,
+            kerning: true,
+            letterSpacing: undefined,
+            tracking: undefined,
+            anchor: "left baseline",
+            attributes: undefined
+        } : options;
+        this.options.x ??= 0;
+        this.options.y ??= 0;
+        this.options.fontSize ??= 72;
+        this.options.kerning ??= true;
+        this.options.letterSpacing ??= undefined;
+        this.options.tracking ??= undefined;
+        this.options.anchor ??= "left baseline";
+        this.options.attributes ??= undefined;
+    }
+    render(text, options) {
+        options ??= this.options;
+        options.x ??= this.options.x;
+        options.y ??= this.options.y;
+        options.fontSize ??= this.options.fontSize;
+        options.kerning ??= this.options.kerning;
+        options.letterSpacing ??= this.options.letterSpacing;
+        options.tracking ??= this.options.tracking;
+        options.anchor ??= this.options.anchor;
+        options.attributes ??= this.options.attributes;
+        if (typeof options.y === "number" && typeof options.fontSize === "number") {
+            options.y += options.fontSize;
+        }
+        return this.renderer.getSVG(text, options);
+    }
+    getSVG(text, options) {
+        return this.render(text, options);
+    }
+    getBuffer(text, options) {
+        return Buffer.from(this.render(text, options));
+    }
+    getSharp(text, format = "png", options) {
+        let sharpObject = (0, sharp_1.default)(this.getBuffer(text, options));
+        switch (format) {
+            case "jpg":
+                return sharpObject.jpeg();
+            case "png":
+                return sharpObject.png();
+            case "webp":
+                return sharpObject.webp();
+            case "avif":
+                return sharpObject.avif();
+            case "gif":
+                return sharpObject.gif();
+            case "tiff":
+                return sharpObject.tiff();
+            case "raw":
+                return sharpObject.raw();
+            default:
+                return sharpObject.png();
+        }
+    }
+}
+exports.TextToImage = TextToImage;

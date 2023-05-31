@@ -9,7 +9,7 @@ import { UnknownArgumentsError } from "./exception"
 // Interfaces define options
 //---------------------------------------
 
-export interface CoordinateOption {
+export interface CoordinateOptions {
     /**
      * x座標
      */
@@ -21,24 +21,24 @@ export interface CoordinateOption {
     y: number
 }
 
-export interface DashOption {
+export interface DashOptions {
     /**
      * 点線の周期
-     * default: []
+     * @default []
      */
     array: Array<number>
 
     /**
      * 点線の開始地点
-     * default: 0
+     * @default 0
      */
     offset: number
 }
 
-export interface ColorOption {
+export interface ColorOptions {
     /**
      * 描画色
-     * default: "black"
+     * @default "black"
      * @example color option
      * ```ts
      * "tomato" // web color name
@@ -50,29 +50,29 @@ export interface ColorOption {
 
     /**
      * 透明度(0-1)
-     * default: 1
+     * @default 1
      */
     opacity: number,
 }
 
-export interface FillOption extends ColorOption {
+export interface FillOptions extends ColorOptions {
 
 }
 
-export interface StrokeOption extends ColorOption {
+export interface StrokeOptions extends ColorOptions {
     /**
      * 線幅
-     * default: 1
+     * @default 1
      */
     width: number,
 
     /**
      * dashオプション
      */
-    dash: Partial<DashOption>
+    dash: Partial<DashOptions>
 }
 
-export interface ShapeOption {
+export interface ShapeOptions {
     /**
      * 画像の横幅
      */
@@ -86,12 +86,12 @@ export interface ShapeOption {
     /**
      * fillオプション
      */
-    fill: Partial<FillOption>
+    fill: Partial<FillOptions>
     
     /**
      * strokeオプション
      */
-    stroke: Partial<StrokeOption>
+    stroke: Partial<StrokeOptions>
 }
 
 
@@ -101,7 +101,7 @@ export interface ShapeOption {
 //---------------------------------------
 
 export interface Mask {
-    (image: sharp.Sharp, mask: sharp.Sharp, options?: Partial<CoordinateOption>): Promise<sharp.Sharp>
+    (image: sharp.Sharp, mask: sharp.Sharp, options?: Partial<CoordinateOptions>): Promise<sharp.Sharp>
 }
 
 export interface Circle {
@@ -113,7 +113,7 @@ export interface Circle {
      * @param options オプション
      * @throws {UnknownArgumentsError} 不明な引数が与えられた場合
      */
-    (radius: number, cx: number, cy: number, options?: Partial<ShapeOption>): sharp.Sharp
+    (radius: number, cx: number, cy: number, options?: Partial<ShapeOptions>): sharp.Sharp
 
     /**
      * 円を描画します。
@@ -121,7 +121,7 @@ export interface Circle {
      * @param options オプション
      * @throws {UnknownArgumentsError} 不明な引数が与えられた場合
      */
-    (radius: number, options?: Partial<ShapeOption>): sharp.Sharp
+    (radius: number, options?: Partial<ShapeOptions>): sharp.Sharp
 }
 
 export interface RoundedRect {
@@ -135,7 +135,7 @@ export interface RoundedRect {
      * @param options オプション
      * @throws {UnknownArgumentsError} 不明な引数が与えられた場合
      */
-    (width: number, height: number, x: number, y: number, round: number, options?: Partial<ShapeOption>): sharp.Sharp
+    (width: number, height: number, x: number, y: number, round: number, options?: Partial<ShapeOptions>): sharp.Sharp
 
     /**
      * 角丸の長方形を描画します。
@@ -145,7 +145,7 @@ export interface RoundedRect {
      * @param options オプション
      * @throws {UnknownArgumentsError} 不明な引数が与えられた場合
      */
-    (width: number, height: number, round: number, options?: Partial<ShapeOption>): sharp.Sharp
+    (width: number, height: number, round: number, options?: Partial<ShapeOptions>): sharp.Sharp
 }
 
 export interface Rect {
@@ -158,7 +158,7 @@ export interface Rect {
      * @param options オプション
      * @throws {UnknownArgumentsError} 不明な引数が与えられた場合
      */
-    (width: number, height: number, x: number, y: number, options?: Partial<ShapeOption>): sharp.Sharp
+    (width: number, height: number, x: number, y: number, options?: Partial<ShapeOptions>): sharp.Sharp
 
     /**
      * 長方形を描画します。
@@ -167,7 +167,7 @@ export interface Rect {
      * @param options オプション
      * @throws {UnknownArgumentsError} 不明な引数が与えられた場合
      */
-    (width: number, height: number, options?: Partial<ShapeOption>): sharp.Sharp
+    (width: number, height: number, options?: Partial<ShapeOptions>): sharp.Sharp
 }
 
 export interface RegularPolygon {
@@ -177,17 +177,17 @@ export interface RegularPolygon {
      * @param r 正多角形が外接する円の半径
      * @param rx 正多角形が外接する円の中心のx座標
      * @param ry 正多角形が外接する円の中心のy座標
-     * @param oprions オプション
+     * @param options オプション
      * @throws {UnknownArgumentsError} 不明な引数が与えられた場合
      */
-    (n: number, r: number, rx: number, ry: number, options?: Partial<ShapeOption>): sharp.Sharp
+    (n: number, r: number, rx: number, ry: number, options?: Partial<ShapeOptions>): sharp.Sharp
 
     /**
      * 正多角形を描画します。
      * @param n 頂点の数
      * @param r 正多角形が外接する円の半径
-     * @param oprions オプション
+     * @param options オプション
      * @throws {UnknownArgumentsError} 不明な引数が与えられた場合
      */
-    (n: number, r: number, options?: Partial<ShapeOption>): sharp.Sharp
+    (n: number, r: number, options?: Partial<ShapeOptions>): sharp.Sharp
 }

@@ -113,3 +113,25 @@ mask(sampleImage, maskImage).then(maskedImage => {
 *masked.png*
 
 ![マスク処理後の画像](./sample/masked.png "マスク処理後の画像")
+
+### TextToImage
+ほぼ[text-to-svg](https://www.npmjs.com/package/text-to-svg)です。
+元パッケージの仕様通り、ローカルのフォントを読み込んで画像出力できます。
+オプションの仕様も同じです。
+
+```ts
+let text = new TextToImage("/fonts/KaiseiHarunoUmi-Regular.ttf", {
+    fontSize: 120,
+    attributes: {
+        fill: "red"
+    }
+})
+
+// 画像出力
+text.getSharp("あいうえおアイウエオ安似宇江尾").toFile("font.png")
+```
+
+#### 結果
+*font.png*
+
+![フォント画像](./sample/font.png "フォント画像")

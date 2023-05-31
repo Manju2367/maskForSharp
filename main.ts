@@ -1,5 +1,6 @@
 import sharp from "sharp"
-import { ShapeOption, Mask, Circle, RoundedRect, Rect, RegularPolygon  } from "./interface"
+import TextToSVG, { GenerationOptions } from "text-to-svg"
+import { ShapeOptions, Mask, Circle, RoundedRect, Rect, RegularPolygon } from "./interface"
 import { ShapeOptionDefault, FillOptionDefault, StrokeOptionDefault, DashOptionDefault } from "./constant"
 import { getImageInfo, isShapeOption } from "./function"
 import { UnknownArgumentsError } from "./exception"
@@ -80,7 +81,7 @@ export const circle: Circle = (...args: any): sharp.Sharp => {
         let radius: number = args[0]
         let cx: number = args[1]
         let cy: number = args[2]
-        let options: ShapeOption|undefined = args[3]
+        let options: ShapeOptions|undefined = args[3]
 
         // init options
         options ??= ShapeOptionDefault
@@ -117,7 +118,7 @@ export const circle: Circle = (...args: any): sharp.Sharp => {
         `))
     } else if(typeof args[0] === "number" && (typeof args[1] === "undefined" || isShapeOption(args[1]))) {
         let radius: number = args[0]
-        let options: ShapeOption|undefined = args[1]
+        let options: ShapeOptions|undefined = args[1]
 
         // init options
         options ??= ShapeOptionDefault
@@ -164,7 +165,7 @@ export const roundedRect: RoundedRect = (...args: any): sharp.Sharp => {
         let x: number = args[2]
         let y: number = args[3]
         let round: number = args[4]
-        let options: ShapeOption|undefined = args[5]
+        let options: ShapeOptions|undefined = args[5]
 
         // init options
         options ??= ShapeOptionDefault
@@ -206,7 +207,7 @@ export const roundedRect: RoundedRect = (...args: any): sharp.Sharp => {
         let width: number = args[0]
         let height: number = args[1]
         let round: number = args[2]
-        let options: ShapeOption|undefined = args[3]
+        let options: ShapeOptions|undefined = args[3]
 
         // init options
         options ??= ShapeOptionDefault
@@ -255,7 +256,7 @@ export const rect: Rect = (...args: any): sharp.Sharp => {
         let height: number = args[1]
         let x: number = args[2]
         let y: number = args[3]
-        let options: ShapeOption|undefined = args[4]
+        let options: ShapeOptions|undefined = args[4]
 
 
      
@@ -263,7 +264,7 @@ export const rect: Rect = (...args: any): sharp.Sharp => {
     } else if(typeof args[0] === "number" && typeof args[1] === "number" && (typeof args[2] === "undefined" || isShapeOption(args[2]))) {
         let width: number = args[0]
         let height: number = args[1]
-        let options: ShapeOption|undefined = args[2]
+        let options: ShapeOptions|undefined = args[2]
 
 
 
@@ -279,7 +280,7 @@ export const regularPolygon: RegularPolygon = (...args: any): sharp.Sharp => {
         let r: number = args[1]
         let rx: number = args[2]
         let ry: number = args[3]
-        let options: ShapeOption|undefined = args[4]
+        let options: ShapeOptions|undefined = args[4]
 
         // init options
         options ??= ShapeOptionDefault
@@ -326,7 +327,7 @@ export const regularPolygon: RegularPolygon = (...args: any): sharp.Sharp => {
     } else if(typeof args[0] === "number" && typeof args[1] === "number" && (typeof args[2] === "undefined" || isShapeOption(args[2]))) {
         let n: number = args[0]
         let r: number = args[1]
-        let options: ShapeOption|undefined = args[2]
+        let options: ShapeOptions|undefined = args[2]
 
         // init options
         options ??= ShapeOptionDefault
@@ -374,4 +375,82 @@ export const regularPolygon: RegularPolygon = (...args: any): sharp.Sharp => {
     } else {
         throw new UnknownArgumentsError("Unknown arguments exception")
     }
+}
+
+export class TextToImage {
+    private renderer: TextToSVG
+    private options: GenerationOptions
+    
+    public constructor(fontLocation?: string, options?: GenerationOptions) {
+        this.renderer = TextToSVG.loadSync(fontLocation)
+
+        // init options default value
+        this.options = typeof options === "undefined" ? {
+            x                       : 0,
+            y                       : 0,
+            fontSize                : 72,
+            kerning                 : true,
+            letterSpacing           : undefined,
+            tracking                : undefined,
+            anchor                  : "left baseline",
+            attributes              : undefined
+        } : options
+        this.options.x              ??= 0
+        this.options.y              ??= 0
+        this.options.fontSize       ??= 72
+        this.options.kerning        ??= true
+        this.options.letterSpacing  ??= undefined
+        this.options.tracking       ??= undefined
+        this.options.anchor         ??= "left baseline"
+        this.options.attributes     ??= undefined
+    }
+
+    private render(text: string, options?: GenerationOptions): string {
+        options ??= this.options
+        options.x ??= this.options.x
+        options.y ??= this.options.y
+        options.fontSize ??= this.options.fontSize
+        options.kerning ??= this.options.kerning
+        options.letterSpacing ??= this.options.letterSpacing
+        options.tracking ??= this.options.tracking
+        options.anchor ??= this.options.anchor
+        options.attributes ??= this.options.attributes
+
+        if(typeof options.y === "number" && typeof options.fontSize === "number") {
+            options.y += options.fontSize
+        }
+
+        return this.renderer.getSVG(text, options)
+    }
+
+    public getSVG(text: string, options?: GenerationOptions): string {
+        return this.render(text, options)
+    }
+
+    public getBuffer(text: string, options?: GenerationOptions): Buffer {
+        return Buffer.from(this.render(text, options))
+    }
+
+    public getSharp(text: string, format="png", options?: GenerationOptions): sharp.Sharp {
+        let sharpObject = sharp(this.getBuffer(text, options))
+        switch(format) {
+            case "jpg":
+                return sharpObject.jpeg()
+            case "png":
+                return sharpObject.png()
+            case "webp":
+                return sharpObject.webp()
+            case "avif":
+                return sharpObject.avif()
+            case "gif":
+                return sharpObject.gif()
+            case "tiff":
+                return sharpObject.tiff()
+            case "raw":
+                return sharpObject.raw()
+            default:
+                return sharpObject.png()
+        }
+    }
+
 }

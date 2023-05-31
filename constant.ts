@@ -1,25 +1,25 @@
-import { FillOption, DashOption, StrokeOption, ShapeOption } from "./interface"
+import { FillOptions, DashOptions, StrokeOptions, ShapeOptions } from "./interface"
 
 
 
-export const FillOptionDefault: FillOption = {
+export const FillOptionDefault: FillOptions = {
     color: "black",
     opacity: 1
 }
 
-export const DashOptionDefault: DashOption = {
+export const DashOptionDefault: DashOptions = {
     array: [],
     offset: 0
 }
 
-export const StrokeOptionDefault: StrokeOption = {
+export const StrokeOptionDefault: StrokeOptions = {
     color: "none",
     width: 1,
     opacity: 1,
     dash: DashOptionDefault
 }
 
-export const ShapeOptionDefault: ShapeOption = {
+export const ShapeOptionDefault: ShapeOptions = {
     fill: FillOptionDefault,
     stroke: StrokeOptionDefault
 }

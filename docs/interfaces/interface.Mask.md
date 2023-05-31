@@ -16,7 +16,7 @@
 | :------ | :------ |
 | `image` | `Sharp` |
 | `mask` | `Sharp` |
-| `options?` | `Partial`<[`CoordinateOption`](interface.CoordinateOption.md)\> |
+| `options?` | `Partial`<[`CoordinateOptions`](interface.CoordinateOptions.md)\> |
 
 #### Returns
 
@@ -24,4 +24,4 @@
 
 #### Defined in
 
-[interface.ts:104](https://github.com/Manju2367/sharpUtils/blob/88cc34b/interface.ts#L104)
+[interface.ts:104](https://github.com/Manju2367/sharpUtils/blob/6d980e5/interface.ts#L104)
