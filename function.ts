@@ -68,7 +68,7 @@ export const isDashOption = (value: unknown): value is DashOptions => {
 
     const { array, offset } = value as Record<keyof DashOptions, unknown>
 
-    if(!(array instanceof Array<number>) && typeof array !== "undefined") {
+    if(!(array instanceof Array) && typeof array !== "undefined") {
         return false
     }
 

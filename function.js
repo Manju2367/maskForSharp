@@ -53,7 +53,7 @@ const isDashOption = (value) => {
         return false;
     }
     const { array, offset } = value;
-    if (!(array instanceof (Array)) && typeof array !== "undefined") {
+    if (!(array instanceof Array) && typeof array !== "undefined") {
         return false;
     }
     if (typeof offset !== "number" && typeof offset !== "undefined") {
