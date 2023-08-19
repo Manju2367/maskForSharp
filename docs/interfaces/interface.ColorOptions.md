@@ -44,7 +44,7 @@ color option
 
 #### Defined in
 
-[interface.ts:49](https://github.com/Manju2367/sharpUtils/blob/6d980e5/interface.ts#L49)
+[interface.ts:49](https://github.com/Manju2367/sharpUtils/blob/ecfe1af/interface.ts#L49)
 
 ___
 
@@ -62,4 +62,4 @@ ___
 
 #### Defined in
 
-[interface.ts:55](https://github.com/Manju2367/sharpUtils/blob/6d980e5/interface.ts#L55)
+[interface.ts:55](https://github.com/Manju2367/sharpUtils/blob/ecfe1af/interface.ts#L55)

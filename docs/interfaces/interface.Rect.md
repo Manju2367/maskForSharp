@@ -12,10 +12,6 @@
 
 長方形を描画します。
 
-**`Throws`**
-
-不明な引数が与えられた場合
-
 #### Parameters
 
 | Name | Type | Description |
@@ -30,19 +26,19 @@
 
 `Sharp`
 
+**`Throws`**
+
+不明な引数が与えられた場合
+
 #### Defined in
 
-[interface.ts:161](https://github.com/Manju2367/sharpUtils/blob/6d980e5/interface.ts#L161)
+[interface.ts:193](https://github.com/Manju2367/sharpUtils/blob/ecfe1af/interface.ts#L193)
 
 ### Rect
 
 ▸ **Rect**(`width`, `height`, `options?`): `Sharp`
 
 長方形を描画します。
-
-**`Throws`**
-
-不明な引数が与えられた場合
 
 #### Parameters
 
@@ -56,6 +52,10 @@
 
 `Sharp`
 
+**`Throws`**
+
+不明な引数が与えられた場合
+
 #### Defined in
 
-[interface.ts:170](https://github.com/Manju2367/sharpUtils/blob/6d980e5/interface.ts#L170)
+[interface.ts:202](https://github.com/Manju2367/sharpUtils/blob/ecfe1af/interface.ts#L202)

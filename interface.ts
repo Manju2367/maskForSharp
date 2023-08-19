@@ -72,6 +72,32 @@ export interface StrokeOptions extends ColorOptions {
     dash: Partial<DashOptions>
 }
 
+export interface RGBAOptions {
+    /**
+     * 赤(0-255)
+     * @default 255
+     */
+    r: number,
+
+    /**
+     * 緑(0-255)
+     * @default 255
+     */
+    g: number,
+
+    /**
+     * 青(0-255)
+     * @default 255
+     */
+    b: number,
+
+    /**
+     * 透明度(0-1)
+     * @default 0
+     */
+    alpha: number
+}
+
 export interface ShapeOptions {
     /**
      * 画像の横幅
@@ -101,6 +127,12 @@ export interface ShapeOptions {
 //---------------------------------------
 
 export interface Mask {
+    /**
+     * マスク処理をします。
+     * @param image 処理対象のSharpオブジェクト
+     * @param mask マスク画像のSharpオブジェクト
+     * @param options オプション
+     */
     (image: sharp.Sharp, mask: sharp.Sharp, options?: Partial<CoordinateOptions>): Promise<sharp.Sharp>
 }
 
@@ -190,4 +222,14 @@ export interface RegularPolygon {
      * @throws {UnknownArgumentsError} 不明な引数が与えられた場合
      */
     (n: number, r: number, options?: Partial<ShapeOptions>): sharp.Sharp
+}
+
+export interface CreateImage {
+    /**
+     * 指定幅・色のSharpオブジェクトを生成します。
+     * @param width 画像の横幅
+     * @param height 画像の縦幅
+     * @param options オプション
+     */
+    (width: number, height: number, options?: Partial<RGBAOptions>): sharp.Sharp
 }

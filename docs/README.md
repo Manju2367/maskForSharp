@@ -90,6 +90,23 @@ regularPolygon(5, 100, {
 
 ![サンプル画像](./sample/regularPolygon.png "サンプル画像")
 
+### createImage
+空の画像を生成します。
+
+```ts
+createImage(400, 300, {
+    r: 223, 
+    g: 255, 
+    b: 235,
+    alpha: 1
+}).toFile("createImage.png")
+```
+
+#### 結果
+*createImage.png*
+
+![サンプル画像](./sample/createImage.png "サンプル画像")
+
 ### mask
 画像にマスク処理をします。
 グレースケール化されたマスク画像の深度(0-255)を参照して、対称の画像の透明度を変更します。

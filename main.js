@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TextToImage = exports.regularPolygon = exports.rect = exports.roundedRect = exports.circle = exports.mask = void 0;
+exports.createImage = exports.TextToImage = exports.regularPolygon = exports.rect = exports.roundedRect = exports.circle = exports.mask = void 0;
 const sharp_1 = __importDefault(require("sharp"));
 const text_to_svg_1 = __importDefault(require("text-to-svg"));
 const constant_1 = require("./constant");
@@ -416,3 +416,19 @@ class TextToImage {
     }
 }
 exports.TextToImage = TextToImage;
+const createImage = (width, height, options) => {
+    options ??= constant_1.RGBAOptionDefault;
+    options.r ??= constant_1.RGBAOptionDefault.r;
+    options.g ??= constant_1.RGBAOptionDefault.g;
+    options.b ??= constant_1.RGBAOptionDefault.b;
+    options.alpha ??= constant_1.RGBAOptionDefault.alpha;
+    return (0, sharp_1.default)({
+        create: {
+            background: options,
+            channels: 4,
+            width: width,
+            height: height
+        }
+    }).png();
+};
+exports.createImage = createImage;

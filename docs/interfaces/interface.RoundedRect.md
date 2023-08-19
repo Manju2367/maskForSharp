@@ -12,10 +12,6 @@
 
 角丸の長方形を描画します。
 
-**`Throws`**
-
-不明な引数が与えられた場合
-
 #### Parameters
 
 | Name | Type | Description |
@@ -31,19 +27,19 @@
 
 `Sharp`
 
+**`Throws`**
+
+不明な引数が与えられた場合
+
 #### Defined in
 
-[interface.ts:138](https://github.com/Manju2367/sharpUtils/blob/6d980e5/interface.ts#L138)
+[interface.ts:170](https://github.com/Manju2367/sharpUtils/blob/ecfe1af/interface.ts#L170)
 
 ### RoundedRect
 
 ▸ **RoundedRect**(`width`, `height`, `round`, `options?`): `Sharp`
 
 角丸の長方形を描画します。
-
-**`Throws`**
-
-不明な引数が与えられた場合
 
 #### Parameters
 
@@ -58,6 +54,10 @@
 
 `Sharp`
 
+**`Throws`**
+
+不明な引数が与えられた場合
+
 #### Defined in
 
-[interface.ts:148](https://github.com/Manju2367/sharpUtils/blob/6d980e5/interface.ts#L148)
+[interface.ts:180](https://github.com/Manju2367/sharpUtils/blob/ecfe1af/interface.ts#L180)

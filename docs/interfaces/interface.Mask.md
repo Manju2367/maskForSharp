@@ -10,13 +10,15 @@
 
 ▸ **Mask**(`image`, `mask`, `options?`): `Promise`<`Sharp`\>
 
+マスク処理をします。
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `image` | `Sharp` |
-| `mask` | `Sharp` |
-| `options?` | `Partial`<[`CoordinateOptions`](interface.CoordinateOptions.md)\> |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `image` | `Sharp` | 処理対象のSharpオブジェクト |
+| `mask` | `Sharp` | マスク画像のSharpオブジェクト |
+| `options?` | `Partial`<[`CoordinateOptions`](interface.CoordinateOptions.md)\> | オプション |
 
 #### Returns
 
@@ -24,4 +26,4 @@
 
 #### Defined in
 
-[interface.ts:104](https://github.com/Manju2367/sharpUtils/blob/6d980e5/interface.ts#L104)
+[interface.ts:136](https://github.com/Manju2367/sharpUtils/blob/ecfe1af/interface.ts#L136)

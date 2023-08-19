@@ -1,7 +1,7 @@
 import sharp from "sharp"
 import TextToSVG, { GenerationOptions } from "text-to-svg"
-import { ShapeOptions, Mask, Circle, RoundedRect, Rect, RegularPolygon } from "./interface"
-import { ShapeOptionDefault, FillOptionDefault, StrokeOptionDefault, DashOptionDefault } from "./constant"
+import { ShapeOptions, Mask, Circle, RoundedRect, Rect, RegularPolygon, CreateImage } from "./interface"
+import { ShapeOptionDefault, FillOptionDefault, StrokeOptionDefault, DashOptionDefault, RGBAOptionDefault } from "./constant"
 import { getImageInfo, isShapeOption } from "./function"
 import { UnknownArgumentsError } from "./exception"
 
@@ -453,4 +453,21 @@ export class TextToImage {
         }
     }
 
+}
+
+export const createImage: CreateImage = (width, height, options?) => {
+    options ??= RGBAOptionDefault
+    options.r ??= RGBAOptionDefault.r
+    options.g ??= RGBAOptionDefault.g
+    options.b ??= RGBAOptionDefault.b
+    options.alpha ??= RGBAOptionDefault.alpha
+
+    return sharp({
+        create: {
+            background: options,
+            channels: 4,
+            width: width,
+            height: height
+        }
+    }).png()
 }

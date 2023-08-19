@@ -23,7 +23,7 @@ fillオプション
 
 #### Defined in
 
-[interface.ts:89](https://github.com/Manju2367/sharpUtils/blob/6d980e5/interface.ts#L89)
+[interface.ts:115](https://github.com/Manju2367/sharpUtils/blob/ecfe1af/interface.ts#L115)
 
 ___
 
@@ -35,7 +35,7 @@ ___
 
 #### Defined in
 
-[interface.ts:84](https://github.com/Manju2367/sharpUtils/blob/6d980e5/interface.ts#L84)
+[interface.ts:110](https://github.com/Manju2367/sharpUtils/blob/ecfe1af/interface.ts#L110)
 
 ___
 
@@ -47,7 +47,7 @@ ___
 
 #### Defined in
 
-[interface.ts:79](https://github.com/Manju2367/sharpUtils/blob/6d980e5/interface.ts#L79)
+[interface.ts:105](https://github.com/Manju2367/sharpUtils/blob/ecfe1af/interface.ts#L105)
 
 ___
 
@@ -59,4 +59,4 @@ strokeオプション
 
 #### Defined in
 
-[interface.ts:94](https://github.com/Manju2367/sharpUtils/blob/6d980e5/interface.ts#L94)
+[interface.ts:120](https://github.com/Manju2367/sharpUtils/blob/ecfe1af/interface.ts#L120)

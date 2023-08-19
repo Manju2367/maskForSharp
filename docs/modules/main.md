@@ -11,6 +11,7 @@
 ### Functions
 
 - [circle](main.md#circle)
+- [createImage](main.md#createimage)
 - [mask](main.md#mask)
 - [rect](main.md#rect)
 - [regularPolygon](main.md#regularpolygon)
@@ -23,10 +24,6 @@
 ▸ **circle**(`radius`, `cx`, `cy`, `options?`): `Sharp`
 
 円を描画します。
-
-**`Throws`**
-
-不明な引数が与えられた場合
 
 #### Parameters
 
@@ -41,17 +38,17 @@
 
 `Sharp`
 
+**`Throws`**
+
+不明な引数が与えられた場合
+
 #### Defined in
 
-[interface.ts:116](https://github.com/Manju2367/sharpUtils/blob/6d980e5/interface.ts#L116)
+[interface.ts:148](https://github.com/Manju2367/sharpUtils/blob/ecfe1af/interface.ts#L148)
 
 ▸ **circle**(`radius`, `options?`): `Sharp`
 
 円を描画します。
-
-**`Throws`**
-
-不明な引数が与えられた場合
 
 #### Parameters
 
@@ -64,9 +61,37 @@
 
 `Sharp`
 
+**`Throws`**
+
+不明な引数が与えられた場合
+
 #### Defined in
 
-[interface.ts:124](https://github.com/Manju2367/sharpUtils/blob/6d980e5/interface.ts#L124)
+[interface.ts:156](https://github.com/Manju2367/sharpUtils/blob/ecfe1af/interface.ts#L156)
+
+___
+
+### createImage
+
+▸ **createImage**(`width`, `height`, `options?`): `Sharp`
+
+指定幅・色のSharpオブジェクトを生成します。
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `width` | `number` | 画像の横幅 |
+| `height` | `number` | 画像の縦幅 |
+| `options?` | `Partial`<[`RGBAOptions`](../interfaces/interface.RGBAOptions.md)\> | オプション |
+
+#### Returns
+
+`Sharp`
+
+#### Defined in
+
+[interface.ts:234](https://github.com/Manju2367/sharpUtils/blob/ecfe1af/interface.ts#L234)
 
 ___
 
@@ -74,13 +99,15 @@ ___
 
 ▸ **mask**(`image`, `mask`, `options?`): `Promise`<`Sharp`\>
 
+マスク処理をします。
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `image` | `Sharp` |
-| `mask` | `Sharp` |
-| `options?` | `Partial`<[`CoordinateOptions`](../interfaces/interface.CoordinateOptions.md)\> |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `image` | `Sharp` | 処理対象のSharpオブジェクト |
+| `mask` | `Sharp` | マスク画像のSharpオブジェクト |
+| `options?` | `Partial`<[`CoordinateOptions`](../interfaces/interface.CoordinateOptions.md)\> | オプション |
 
 #### Returns
 
@@ -88,7 +115,7 @@ ___
 
 #### Defined in
 
-[interface.ts:104](https://github.com/Manju2367/sharpUtils/blob/6d980e5/interface.ts#L104)
+[interface.ts:136](https://github.com/Manju2367/sharpUtils/blob/ecfe1af/interface.ts#L136)
 
 ___
 
@@ -97,10 +124,6 @@ ___
 ▸ **rect**(`width`, `height`, `x`, `y`, `options?`): `Sharp`
 
 長方形を描画します。
-
-**`Throws`**
-
-不明な引数が与えられた場合
 
 #### Parameters
 
@@ -116,17 +139,17 @@ ___
 
 `Sharp`
 
+**`Throws`**
+
+不明な引数が与えられた場合
+
 #### Defined in
 
-[interface.ts:161](https://github.com/Manju2367/sharpUtils/blob/6d980e5/interface.ts#L161)
+[interface.ts:193](https://github.com/Manju2367/sharpUtils/blob/ecfe1af/interface.ts#L193)
 
 ▸ **rect**(`width`, `height`, `options?`): `Sharp`
 
 長方形を描画します。
-
-**`Throws`**
-
-不明な引数が与えられた場合
 
 #### Parameters
 
@@ -140,9 +163,13 @@ ___
 
 `Sharp`
 
+**`Throws`**
+
+不明な引数が与えられた場合
+
 #### Defined in
 
-[interface.ts:170](https://github.com/Manju2367/sharpUtils/blob/6d980e5/interface.ts#L170)
+[interface.ts:202](https://github.com/Manju2367/sharpUtils/blob/ecfe1af/interface.ts#L202)
 
 ___
 
@@ -151,10 +178,6 @@ ___
 ▸ **regularPolygon**(`n`, `r`, `rx`, `ry`, `options?`): `Sharp`
 
 正多角形を描画します。
-
-**`Throws`**
-
-不明な引数が与えられた場合
 
 #### Parameters
 
@@ -170,17 +193,17 @@ ___
 
 `Sharp`
 
+**`Throws`**
+
+不明な引数が与えられた場合
+
 #### Defined in
 
-[interface.ts:183](https://github.com/Manju2367/sharpUtils/blob/6d980e5/interface.ts#L183)
+[interface.ts:215](https://github.com/Manju2367/sharpUtils/blob/ecfe1af/interface.ts#L215)
 
 ▸ **regularPolygon**(`n`, `r`, `options?`): `Sharp`
 
 正多角形を描画します。
-
-**`Throws`**
-
-不明な引数が与えられた場合
 
 #### Parameters
 
@@ -194,9 +217,13 @@ ___
 
 `Sharp`
 
+**`Throws`**
+
+不明な引数が与えられた場合
+
 #### Defined in
 
-[interface.ts:192](https://github.com/Manju2367/sharpUtils/blob/6d980e5/interface.ts#L192)
+[interface.ts:224](https://github.com/Manju2367/sharpUtils/blob/ecfe1af/interface.ts#L224)
 
 ___
 
@@ -205,10 +232,6 @@ ___
 ▸ **roundedRect**(`width`, `height`, `x`, `y`, `round`, `options?`): `Sharp`
 
 角丸の長方形を描画します。
-
-**`Throws`**
-
-不明な引数が与えられた場合
 
 #### Parameters
 
@@ -225,17 +248,17 @@ ___
 
 `Sharp`
 
+**`Throws`**
+
+不明な引数が与えられた場合
+
 #### Defined in
 
-[interface.ts:138](https://github.com/Manju2367/sharpUtils/blob/6d980e5/interface.ts#L138)
+[interface.ts:170](https://github.com/Manju2367/sharpUtils/blob/ecfe1af/interface.ts#L170)
 
 ▸ **roundedRect**(`width`, `height`, `round`, `options?`): `Sharp`
 
 角丸の長方形を描画します。
-
-**`Throws`**
-
-不明な引数が与えられた場合
 
 #### Parameters
 
@@ -250,6 +273,10 @@ ___
 
 `Sharp`
 
+**`Throws`**
+
+不明な引数が与えられた場合
+
 #### Defined in
 
-[interface.ts:148](https://github.com/Manju2367/sharpUtils/blob/6d980e5/interface.ts#L148)
+[interface.ts:180](https://github.com/Manju2367/sharpUtils/blob/ecfe1af/interface.ts#L180)
