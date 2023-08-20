@@ -26,4 +26,4 @@
 
 #### Defined in
 
-[interface.ts:136](https://github.com/Manju2367/sharpUtils/blob/ecfe1af/interface.ts#L136)
+[interface.ts:136](https://github.com/Manju2367/sharpUtils/blob/fdd5058/interface.ts#L136)

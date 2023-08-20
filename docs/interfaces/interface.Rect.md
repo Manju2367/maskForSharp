@@ -32,7 +32,7 @@
 
 #### Defined in
 
-[interface.ts:193](https://github.com/Manju2367/sharpUtils/blob/ecfe1af/interface.ts#L193)
+[interface.ts:193](https://github.com/Manju2367/sharpUtils/blob/fdd5058/interface.ts#L193)
 
 ### Rect
 
@@ -58,4 +58,4 @@
 
 #### Defined in
 
-[interface.ts:202](https://github.com/Manju2367/sharpUtils/blob/ecfe1af/interface.ts#L202)
+[interface.ts:202](https://github.com/Manju2367/sharpUtils/blob/fdd5058/interface.ts#L202)

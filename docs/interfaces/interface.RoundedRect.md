@@ -33,7 +33,7 @@
 
 #### Defined in
 
-[interface.ts:170](https://github.com/Manju2367/sharpUtils/blob/ecfe1af/interface.ts#L170)
+[interface.ts:170](https://github.com/Manju2367/sharpUtils/blob/fdd5058/interface.ts#L170)
 
 ### RoundedRect
 
@@ -60,4 +60,4 @@
 
 #### Defined in
 
-[interface.ts:180](https://github.com/Manju2367/sharpUtils/blob/ecfe1af/interface.ts#L180)
+[interface.ts:180](https://github.com/Manju2367/sharpUtils/blob/fdd5058/interface.ts#L180)

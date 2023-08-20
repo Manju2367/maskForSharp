@@ -29,7 +29,7 @@ export const mask: Mask = async (image, mask, options?): Promise<sharp.Sharp> =>
                 let maskHeight = maskInfo.height + options.y
 
                 if(maskWidth > info.width || maskHeight > info.height) {
-                    console.log("extract")
+                    // console.log("extract")
                     mask.extract({
                         left: 0,
                         top: 0,
@@ -68,7 +68,7 @@ export const mask: Mask = async (image, mask, options?): Promise<sharp.Sharp> =>
                         height: info.height,
                         channels: 4
                     }
-                }))
+                }).png())
             } else {
                 reject(err)
             }
@@ -115,7 +115,7 @@ export const circle: Circle = (...args: any): sharp.Sharp => {
                     stroke-dashoffset="${ options.stroke.dash.offset }"
                 />
             </svg>
-        `))
+        `)).png()
     } else if(typeof args[0] === "number" && (typeof args[1] === "undefined" || isShapeOption(args[1]))) {
         let radius: number = args[0]
         let options: ShapeOptions|undefined = args[1]
@@ -152,7 +152,7 @@ export const circle: Circle = (...args: any): sharp.Sharp => {
                     stroke-dashoffset="${ options.stroke.dash.offset }"
                 />
             </svg>
-        `))
+        `)).png()
     } else {
         throw new UnknownArgumentsError("Unknown arguments exception")
     }
@@ -202,7 +202,7 @@ export const roundedRect: RoundedRect = (...args: any): sharp.Sharp => {
                     stroke-dashoffset="${ options.stroke.dash.offset }"
                 />
             </svg>
-        `))
+        `)).png()
     } else if(typeof args[0] === "number" && typeof args[1] === "number" && typeof args[2] === "number" && (typeof args[3] === "undefined" || isShapeOption(args[3]))) {
         let width: number = args[0]
         let height: number = args[1]
@@ -244,7 +244,7 @@ export const roundedRect: RoundedRect = (...args: any): sharp.Sharp => {
                 stroke-dashoffset="${ options.stroke.dash.offset }"
             />
         </svg>
-        `))
+        `)).png()
     } else {
         throw new UnknownArgumentsError("Unknown arguments exception")
     }
@@ -323,7 +323,7 @@ export const regularPolygon: RegularPolygon = (...args: any): sharp.Sharp => {
                     stroke-dashoffset="${ options.stroke.dash.offset }"
                 />
             </svg>
-        `))
+        `)).png()
     } else if(typeof args[0] === "number" && typeof args[1] === "number" && (typeof args[2] === "undefined" || isShapeOption(args[2]))) {
         let n: number = args[0]
         let r: number = args[1]
@@ -352,7 +352,7 @@ export const regularPolygon: RegularPolygon = (...args: any): sharp.Sharp => {
         let strokeWidthCos = options.stroke.color !== "none" ?
             options.stroke.width / Math.cos(Math.PI/2 - ((Math.PI * (n - 2)) / (2*n))) :
             0
-        console.log(strokeWidthCos)
+        // console.log(strokeWidthCos)
         for(let i = 0; i < n; i++) {
             points.push(`${ Math.sin(angle) * (r - strokeWidthCos) + r },${ Math.cos(angle) * (r - strokeWidthCos) + r }`)
             angle += 2*Math.PI / n
@@ -371,7 +371,7 @@ export const regularPolygon: RegularPolygon = (...args: any): sharp.Sharp => {
                     stroke-dashoffset="${ options.stroke.dash.offset }"
                 />
             </svg>
-        `))
+        `)).png()
     } else {
         throw new UnknownArgumentsError("Unknown arguments exception")
     }

@@ -27,7 +27,7 @@
 
 #### Defined in
 
-[interface.ts:29](https://github.com/Manju2367/sharpUtils/blob/ecfe1af/interface.ts#L29)
+[interface.ts:29](https://github.com/Manju2367/sharpUtils/blob/fdd5058/interface.ts#L29)
 
 ___
 
@@ -45,4 +45,4 @@ ___
 
 #### Defined in
 
-[interface.ts:35](https://github.com/Manju2367/sharpUtils/blob/ecfe1af/interface.ts#L35)
+[interface.ts:35](https://github.com/Manju2367/sharpUtils/blob/fdd5058/interface.ts#L35)

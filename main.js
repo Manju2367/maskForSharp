@@ -25,7 +25,7 @@ const mask = async (image, mask, options) => {
                 let maskWidth = maskInfo.width + options.x;
                 let maskHeight = maskInfo.height + options.y;
                 if (maskWidth > info.width || maskHeight > info.height) {
-                    console.log("extract");
+                    // console.log("extract")
                     mask.extract({
                         left: 0,
                         top: 0,
@@ -61,7 +61,7 @@ const mask = async (image, mask, options) => {
                         height: info.height,
                         channels: 4
                     }
-                }));
+                }).png());
             }
             else {
                 reject(err);
@@ -105,7 +105,7 @@ const circle = (...args) => {
                     stroke-dashoffset="${options.stroke.dash.offset}"
                 />
             </svg>
-        `));
+        `)).png();
     }
     else if (typeof args[0] === "number" && (typeof args[1] === "undefined" || (0, function_1.isShapeOption)(args[1]))) {
         let radius = args[0];
@@ -139,7 +139,7 @@ const circle = (...args) => {
                     stroke-dashoffset="${options.stroke.dash.offset}"
                 />
             </svg>
-        `));
+        `)).png();
     }
     else {
         throw new exception_1.UnknownArgumentsError("Unknown arguments exception");
@@ -186,7 +186,7 @@ const roundedRect = (...args) => {
                     stroke-dashoffset="${options.stroke.dash.offset}"
                 />
             </svg>
-        `));
+        `)).png();
     }
     else if (typeof args[0] === "number" && typeof args[1] === "number" && typeof args[2] === "number" && (typeof args[3] === "undefined" || (0, function_1.isShapeOption)(args[3]))) {
         let width = args[0];
@@ -225,7 +225,7 @@ const roundedRect = (...args) => {
                 stroke-dashoffset="${options.stroke.dash.offset}"
             />
         </svg>
-        `));
+        `)).png();
     }
     else {
         throw new exception_1.UnknownArgumentsError("Unknown arguments exception");
@@ -296,7 +296,7 @@ const regularPolygon = (...args) => {
                     stroke-dashoffset="${options.stroke.dash.offset}"
                 />
             </svg>
-        `));
+        `)).png();
     }
     else if (typeof args[0] === "number" && typeof args[1] === "number" && (typeof args[2] === "undefined" || (0, function_1.isShapeOption)(args[2]))) {
         let n = args[0];
@@ -322,7 +322,7 @@ const regularPolygon = (...args) => {
         let strokeWidthCos = options.stroke.color !== "none" ?
             options.stroke.width / Math.cos(Math.PI / 2 - ((Math.PI * (n - 2)) / (2 * n))) :
             0;
-        console.log(strokeWidthCos);
+        // console.log(strokeWidthCos)
         for (let i = 0; i < n; i++) {
             points.push(`${Math.sin(angle) * (r - strokeWidthCos) + r},${Math.cos(angle) * (r - strokeWidthCos) + r}`);
             angle += 2 * Math.PI / n;
@@ -340,7 +340,7 @@ const regularPolygon = (...args) => {
                     stroke-dashoffset="${options.stroke.dash.offset}"
                 />
             </svg>
-        `));
+        `)).png();
     }
     else {
         throw new exception_1.UnknownArgumentsError("Unknown arguments exception");
