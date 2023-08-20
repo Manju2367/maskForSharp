@@ -29,7 +29,7 @@
 
 #### Defined in
 
-[interface.ts:98](https://github.com/Manju2367/sharpUtils/blob/fdd5058/interface.ts#L98)
+[interface.ts:98](https://github.com/Manju2367/sharpUtils/blob/7f05473/interface.ts#L98)
 
 ___
 
@@ -47,7 +47,7 @@ ___
 
 #### Defined in
 
-[interface.ts:92](https://github.com/Manju2367/sharpUtils/blob/fdd5058/interface.ts#L92)
+[interface.ts:92](https://github.com/Manju2367/sharpUtils/blob/7f05473/interface.ts#L92)
 
 ___
 
@@ -65,7 +65,7 @@ ___
 
 #### Defined in
 
-[interface.ts:86](https://github.com/Manju2367/sharpUtils/blob/fdd5058/interface.ts#L86)
+[interface.ts:86](https://github.com/Manju2367/sharpUtils/blob/7f05473/interface.ts#L86)
 
 ___
 
@@ -83,4 +83,4 @@ ___
 
 #### Defined in
 
-[interface.ts:80](https://github.com/Manju2367/sharpUtils/blob/fdd5058/interface.ts#L80)
+[interface.ts:80](https://github.com/Manju2367/sharpUtils/blob/7f05473/interface.ts#L80)

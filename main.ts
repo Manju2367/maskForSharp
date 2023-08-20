@@ -405,7 +405,7 @@ export class TextToImage {
         this.options.attributes     ??= undefined
     }
 
-    private render(text: string, options?: GenerationOptions): string {
+    public render(text: string, options?: GenerationOptions): string {
         options ??= this.options
         options.x ??= this.options.x
         options.y ??= this.options.y

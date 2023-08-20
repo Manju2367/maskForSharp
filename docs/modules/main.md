@@ -44,7 +44,7 @@
 
 #### Defined in
 
-[interface.ts:148](https://github.com/Manju2367/sharpUtils/blob/fdd5058/interface.ts#L148)
+[interface.ts:148](https://github.com/Manju2367/sharpUtils/blob/7f05473/interface.ts#L148)
 
 ▸ **circle**(`radius`, `options?`): `Sharp`
 
@@ -67,7 +67,7 @@
 
 #### Defined in
 
-[interface.ts:156](https://github.com/Manju2367/sharpUtils/blob/fdd5058/interface.ts#L156)
+[interface.ts:156](https://github.com/Manju2367/sharpUtils/blob/7f05473/interface.ts#L156)
 
 ___
 
@@ -91,7 +91,7 @@ ___
 
 #### Defined in
 
-[interface.ts:234](https://github.com/Manju2367/sharpUtils/blob/fdd5058/interface.ts#L234)
+[interface.ts:234](https://github.com/Manju2367/sharpUtils/blob/7f05473/interface.ts#L234)
 
 ___
 
@@ -115,7 +115,7 @@ ___
 
 #### Defined in
 
-[interface.ts:136](https://github.com/Manju2367/sharpUtils/blob/fdd5058/interface.ts#L136)
+[interface.ts:136](https://github.com/Manju2367/sharpUtils/blob/7f05473/interface.ts#L136)
 
 ___
 
@@ -145,7 +145,7 @@ ___
 
 #### Defined in
 
-[interface.ts:193](https://github.com/Manju2367/sharpUtils/blob/fdd5058/interface.ts#L193)
+[interface.ts:193](https://github.com/Manju2367/sharpUtils/blob/7f05473/interface.ts#L193)
 
 ▸ **rect**(`width`, `height`, `options?`): `Sharp`
 
@@ -169,7 +169,7 @@ ___
 
 #### Defined in
 
-[interface.ts:202](https://github.com/Manju2367/sharpUtils/blob/fdd5058/interface.ts#L202)
+[interface.ts:202](https://github.com/Manju2367/sharpUtils/blob/7f05473/interface.ts#L202)
 
 ___
 
@@ -199,7 +199,7 @@ ___
 
 #### Defined in
 
-[interface.ts:215](https://github.com/Manju2367/sharpUtils/blob/fdd5058/interface.ts#L215)
+[interface.ts:215](https://github.com/Manju2367/sharpUtils/blob/7f05473/interface.ts#L215)
 
 ▸ **regularPolygon**(`n`, `r`, `options?`): `Sharp`
 
@@ -223,7 +223,7 @@ ___
 
 #### Defined in
 
-[interface.ts:224](https://github.com/Manju2367/sharpUtils/blob/fdd5058/interface.ts#L224)
+[interface.ts:224](https://github.com/Manju2367/sharpUtils/blob/7f05473/interface.ts#L224)
 
 ___
 
@@ -254,7 +254,7 @@ ___
 
 #### Defined in
 
-[interface.ts:170](https://github.com/Manju2367/sharpUtils/blob/fdd5058/interface.ts#L170)
+[interface.ts:170](https://github.com/Manju2367/sharpUtils/blob/7f05473/interface.ts#L170)
 
 ▸ **roundedRect**(`width`, `height`, `round`, `options?`): `Sharp`
 
@@ -279,4 +279,4 @@ ___
 
 #### Defined in
 
-[interface.ts:180](https://github.com/Manju2367/sharpUtils/blob/fdd5058/interface.ts#L180)
+[interface.ts:180](https://github.com/Manju2367/sharpUtils/blob/7f05473/interface.ts#L180)

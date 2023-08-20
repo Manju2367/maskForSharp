@@ -37,7 +37,7 @@
 
 #### Defined in
 
-[main.ts:384](https://github.com/Manju2367/sharpUtils/blob/fdd5058/main.ts#L384)
+[main.ts:384](https://github.com/Manju2367/sharpUtils/blob/7f05473/main.ts#L384)
 
 ## Properties
 
@@ -47,7 +47,7 @@
 
 #### Defined in
 
-[main.ts:382](https://github.com/Manju2367/sharpUtils/blob/fdd5058/main.ts#L382)
+[main.ts:382](https://github.com/Manju2367/sharpUtils/blob/7f05473/main.ts#L382)
 
 ___
 
@@ -57,7 +57,7 @@ ___
 
 #### Defined in
 
-[main.ts:381](https://github.com/Manju2367/sharpUtils/blob/fdd5058/main.ts#L381)
+[main.ts:381](https://github.com/Manju2367/sharpUtils/blob/7f05473/main.ts#L381)
 
 ## Methods
 
@@ -78,7 +78,7 @@ ___
 
 #### Defined in
 
-[main.ts:430](https://github.com/Manju2367/sharpUtils/blob/fdd5058/main.ts#L430)
+[main.ts:430](https://github.com/Manju2367/sharpUtils/blob/7f05473/main.ts#L430)
 
 ___
 
@@ -99,7 +99,7 @@ ___
 
 #### Defined in
 
-[main.ts:426](https://github.com/Manju2367/sharpUtils/blob/fdd5058/main.ts#L426)
+[main.ts:426](https://github.com/Manju2367/sharpUtils/blob/7f05473/main.ts#L426)
 
 ___
 
@@ -121,13 +121,13 @@ ___
 
 #### Defined in
 
-[main.ts:434](https://github.com/Manju2367/sharpUtils/blob/fdd5058/main.ts#L434)
+[main.ts:434](https://github.com/Manju2367/sharpUtils/blob/7f05473/main.ts#L434)
 
 ___
 
 ### render
 
-▸ `Private` **render**(`text`, `options?`): `string`
+▸ **render**(`text`, `options?`): `string`
 
 #### Parameters
 
@@ -142,4 +142,4 @@ ___
 
 #### Defined in
 
-[main.ts:408](https://github.com/Manju2367/sharpUtils/blob/fdd5058/main.ts#L408)
+[main.ts:408](https://github.com/Manju2367/sharpUtils/blob/7f05473/main.ts#L408)
